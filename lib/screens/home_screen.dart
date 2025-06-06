@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 10),
               Container(
                 padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
+                decoration: BoxDecoration( 
                   gradient: LinearGradient(colors: [Colors.teal, Colors.green]),
                   borderRadius: BorderRadius.circular(12),
                 ),

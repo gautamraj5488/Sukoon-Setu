@@ -1,49 +1,52 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sukoon_setu/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-      );
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.pushReplacementNamed(context, '/welcome');
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Colors.white, // Make background transparent to show the image
-      body: Container(
-        width: double.infinity,
-        height: double.infinity, // Ensure the container fills the screen
-        // decoration: BoxDecoration(
-        //   image: DecorationImage(
-        //     image: AssetImage(
-        //       "assets/pics/bg.png",
-        //     ), // Path to your background image
-        //     fit: BoxFit.cover, // Make sure the image covers the whole screen
-        //   ),
-        // ),
-        child: Center(child: Image.asset("assets/logos/heart.png",width: MediaQuery.of(context).size.width*0.4,)),
+      backgroundColor: const Color(0xFFFFF7F0),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    Icons.self_improvement,
+                    size: 80,
+                    color: Colors.deepOrange,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'SukoonSetu',
+                    style: TextStyle(
+                      fontSize: 36,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,27 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sukoon_setu/l10n/app_localizations.dart'; // generated localization class import
 import 'package:sukoon_setu/screens/splash_screen.dart';
-import 'package:sukoon_setu/screens/welcome_screen.dart';
 
-void main() => runApp(const SukoonSetuApp());
+void main() {
+  runApp(const MyApp());
+}
 
-class SukoonSetuApp extends StatelessWidget {
-  const SukoonSetuApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale? _locale;
+
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'SukoonSetu',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF6F61)),
-        fontFamily: 'Roboto',
-        useMaterial3: true,
+      title: 'My App',
+      locale: _locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,  // <-- Use this instead of S.delegate
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      home: SplashScreen(
+        onLocaleSelected: setLocale,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreen(),
-        '/welcome': (context) => const WelcomeScreen(),
-      },
     );
   }
 }

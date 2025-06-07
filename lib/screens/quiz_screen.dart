@@ -11,9 +11,10 @@ class Question {
 }
 
 class QuizScreen extends StatefulWidget {
+  final Function(Locale) onLocaleChange;
   final UserInfo userInfo;
 
-  const QuizScreen({super.key, required this.userInfo});
+  const QuizScreen({super.key, required this.userInfo, required this.onLocaleChange});
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
@@ -61,7 +62,7 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void _navigateToHome() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => HomeScreen()),
+      MaterialPageRoute(builder: (_) => HomeScreen(onLocaleChange: widget.onLocaleChange,)),
     );
   }
 

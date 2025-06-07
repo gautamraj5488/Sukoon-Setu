@@ -1,0 +1,65 @@
+{
+  "@@locale": "en",
+  "ccontinue": "Continue",
+  "name": "Name",
+  "age": "Age",
+  "gender": "Gender",
+  "personalInfoTitle": "Personal Information",
+  "tellUsAboutYou": "Tell us about yourself",
+  "helpUsServeBetter": "Your info helps us serve you better",
+  "selectLanguage": "Select your preferred language",
+  "loginWithPhone": "Login with Phone",
+  "enterPhone": "Enter your phone number",
+  "sendOtp": "Send OTP",
+  "verifyOtp": "Verify OTP",
+  "otpSentTo": "OTP has been sent to",
+  "needHelp": "Need help? Contact support.",
+  "chooseLanguage": "Choose Language",
+  "languageServicePrompt": "In which language would you like the service?",
+
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "genderOther": "Other",
+
+
+  "nameLabel": "Name *",
+  "nameHint": "Enter your name",
+  "nameError": "Please enter your name",
+
+  "ageLabel": "Age *",
+  "ageHint": "25",
+  "ageError": "Please enter age",
+
+  "genderLabel": "Gender *",
+  "genderHint": "Select",
+  "genderError": "Please select gender",
+
+  "professionLabel": "Profession *",
+  "professionHint": "Your work",
+  "professionError": "Please enter profession",
+
+  "areaLabel": "Area *",
+  "areaHint": "City/Village name",
+  "areaError": "Please enter area",
+
+  "weightLabel": "Weight (kg)",
+  "weightHint": "60",
+
+  "heightLabel": "Height (cm)",
+  "heightHint": "170",
+
+    "greeting": "Hello! 👋",
+    "howWasYourDay": "How was your day today?",
+    "services": "Services",
+    "aboutUs": "About Us",
+    "adviceFromSetu": "Advice from Setu",
+    "audioBooksStories": "Audiobooks/Stories",
+    "commonMentalHealth": "Common Mental Health Issues",
+    "tipOfTheDay": "Tip of the Day",
+    "deepBreathTip": "Take a deep breath\n5 minutes of practice reduces stress and calms the mind.",
+    "doItNow": "Do it now",
+    "homeLabel": "Home",
+    "adviceLabel": "Advice",
+    "booksLabel": "Books",
+    "profileLabel": "Profile"
+}

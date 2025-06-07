@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sukoon_setu/screens/phone_otp_login_page.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  final Function(Locale) onLocaleSelected;
+  const WelcomeScreen({super.key, required this.onLocaleSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,9 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneOtpLoginPage(onLocaleSelected: onLocaleSelected)));
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepOrange,
                       minimumSize: const Size(double.infinity, 50),

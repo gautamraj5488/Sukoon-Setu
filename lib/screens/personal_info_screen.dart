@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
+import 'package:sukoon_setu/screens/home_screen.dart';
 import 'package:sukoon_setu/screens/quiz_screen.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
-  const PersonalInfoScreen({super.key});
+  final Function(Locale) onLocaleChange;
+  const PersonalInfoScreen({super.key, required this.onLocaleChange});
 
   @override
   State<PersonalInfoScreen> createState() => _PersonalInfoScreenState();
@@ -20,7 +23,6 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final TextEditingController heightController = TextEditingController();
 
   String? selectedGender;
-  final List<String> genders = ['पुरुष', 'महिला', 'अन्य'];
 
   InputDecoration customInputDecoration(String label, String hint) {
     return InputDecoration(
@@ -37,14 +39,26 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+
+    final genders = [
+      localizations.genderMale,
+      localizations.genderFemale,
+      localizations.genderOther,
+    ];
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFFFF7F0),
       appBar: AppBar(
-        title: const Text("व्यक्तिगत जानकारी", style: TextStyle(color: Colors.black)),
+        title: Text(
+          localizations.personalInfoTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xFFFFF7F0),
+        foregroundColor: Colors.black87,
         elevation: 0,
-        leading: const BackButton(color: Colors.black),
+        leading: const BackButton(color: Colors.black87),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -52,81 +66,79 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           key: _formKey,
           child: Column(
             children: [
-              const Icon(Icons.person_outline, size: 60, color: Color(0xFF00AEEF)),
+              const Icon(Icons.person_outline, size: 60, color: Colors.deepOrange),
               const SizedBox(height: 12),
-              const Text(
-                "अपने बारे में बताएं",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                localizations.tellUsAboutYou,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
-              const Text(
-                "बेहतर सेवा के लिए आपकी जानकारी",
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+              Text(
+                localizations.helpUsServeBetter,
+                style: const TextStyle(fontSize: 14, color: Colors.black54),
               ),
               const SizedBox(height: 24),
 
-              // नाम
+              // Name
               TextFormField(
                 controller: nameController,
-                decoration: customInputDecoration("नाम *", "अपना नाम लिखें"),
-                validator: (value) => value!.isEmpty ? "कृपया नाम भरें" : null,
+                decoration: customInputDecoration(localizations.nameLabel, localizations.nameHint),
+                validator: (value) => value!.isEmpty ? localizations.nameError : null,
               ),
               const SizedBox(height: 16),
 
-              // उम्र और लिंग
+              // Age + Gender
               Row(
                 children: [
                   Expanded(
                     child: TextFormField(
                       controller: ageController,
                       keyboardType: TextInputType.number,
-                      decoration: customInputDecoration("उम्र *", "25"),
-                      validator: (value) => value!.isEmpty ? "उम्र भरें" : null,
+                      decoration: customInputDecoration(localizations.ageLabel, localizations.ageHint),
+                      validator: (value) => value!.isEmpty ? localizations.ageError : null,
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: DropdownButtonFormField<String>(
-                      decoration: customInputDecoration("लिंग *", "चुनें"),
+                      decoration: customInputDecoration(localizations.genderLabel, localizations.genderHint),
                       value: selectedGender,
-                      items: genders
-                          .map((gender) => DropdownMenuItem(
-                                value: gender,
-                                child: Text(gender),
-                              ))
-                          .toList(),
+                      items: genders.map((gender) => DropdownMenuItem(
+                        value: gender,
+                        child: Text(gender),
+                      )).toList(),
                       onChanged: (value) => setState(() => selectedGender = value),
-                      validator: (value) => value == null ? "चुनें" : null,
+                      validator: (value) => value == null ? localizations.genderError : null,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
 
-              // पेशा
+              // Profession
               TextFormField(
                 controller: professionController,
-                decoration: customInputDecoration("पेशा *", "आपका काम"),
-                validator: (value) => value!.isEmpty ? "पेशा भरें" : null,
+                decoration: customInputDecoration(localizations.professionLabel, localizations.professionHint),
+                validator: (value) => value!.isEmpty ? localizations.professionError : null,
               ),
               const SizedBox(height: 16),
 
-              // इलाका
+              // Area
               TextFormField(
                 controller: areaController,
-                decoration: customInputDecoration("इलाका *", "शहर/गाँव का नाम"),
-                validator: (value) => value!.isEmpty ? "इलाका भरें" : null,
+                decoration: customInputDecoration(localizations.areaLabel, localizations.areaHint),
+                validator: (value) => value!.isEmpty ? localizations.areaError : null,
               ),
               const SizedBox(height: 16),
 
-              // वजन और कद
+              // Weight + Height
               Row(
                 children: [
                   Expanded(
                     child: TextFormField(
                       controller: weightController,
                       keyboardType: TextInputType.number,
-                      decoration: customInputDecoration("वजन (kg)", "60"),
+                      decoration: customInputDecoration(localizations.weightLabel, localizations.weightHint),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -134,14 +146,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     child: TextFormField(
                       controller: heightController,
                       keyboardType: TextInputType.number,
-                      decoration: customInputDecoration("कद (cm)", "170"),
+                      decoration: customInputDecoration(localizations.heightLabel, localizations.heightHint),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 30),
 
-              // Button
+              // Continue Button
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -164,22 +176,25 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => QuizScreen(userInfo: userInfo),
+                          builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleChange),
                         ),
                       );
                     }
                   },
-
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF00AEEF),
+                    backgroundColor: Colors.deepOrange,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
-                    "आगे बढ़ें",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  child: Text(
+                    localizations.ccontinue,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               )

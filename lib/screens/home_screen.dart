@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
+import 'package:sukoon_setu/models/user_info_model.dart';
+import 'package:sukoon_setu/screens/about_us.dart';
+import 'package:sukoon_setu/screens/audio_books.dart';
+import 'package:sukoon_setu/screens/chat_screen.dart';
+import 'package:sukoon_setu/screens/quiz_screen.dart';
+import 'package:sukoon_setu/screens/understand_common_conditions.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -12,13 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomeContentPage(),
-    const AdvicePage(),
-    const BooksPage(),
-    const ProfilePage(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -27,6 +26,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      HomeContentPage(onLocaleChange: widget.onLocaleChange),
+      AdvicePage(onLocaleChange: widget.onLocaleChange),
+      BooksPage(onLocaleChange: widget.onLocaleChange),
+      ProfilePage(onLocaleChange: widget.onLocaleChange),
+    ];
+
     final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
@@ -38,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _onItemTapped,
         backgroundColor: theme.colorScheme.surface, // instead of Colors.white
         selectedItemColor: theme.primaryColor, // instead of Color(0xFFff6e40)
-        unselectedItemColor: Colors.grey.shade600, // can keep grey here or add to AppColors
+        unselectedItemColor:
+            Colors.grey.shade600, // can keep grey here or add to AppColors
         showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
@@ -64,7 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class HomeContentPage extends StatelessWidget {
-  const HomeContentPage({super.key});
+  final Function(Locale) onLocaleChange;
+  HomeContentPage({super.key, required this.onLocaleChange});
+
+  final userInfo = UserInfo(
+    name: '',
+    age: 0,
+    gender: '',
+    profession: '',
+    area: '',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +104,10 @@ class HomeContentPage extends StatelessWidget {
             localizations.howWasYourDay,
             style: theme.textTheme.bodyMedium!.copyWith(
               fontSize: 18,
-              color: theme.textTheme.bodyLarge!.color, // usually primary text color
+              color: theme
+                  .textTheme
+                  .bodyLarge!
+                  .color, // usually primary text color
             ),
           ),
           const SizedBox(height: 30),
@@ -108,79 +127,113 @@ class HomeContentPage extends StatelessWidget {
             mainAxisSpacing: 10,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              _buildServiceCard(localizations.aboutUs, Icons.favorite, theme),
-              _buildServiceCard(localizations.adviceFromSetu, Icons.medication_liquid, theme),
-              _buildServiceCard(localizations.audioBooksStories, Icons.menu_book, theme),
-              _buildServiceCard(localizations.commonMentalHealth, Icons.psychology, theme),
-            ],
-          ),
-          const SizedBox(height: 30),
-          Text(
-            localizations.tipOfTheDay,
-            style: theme.textTheme.bodyLarge!.copyWith(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: theme.primaryColor, // instead of Colors.deepOrange
-            ),
-          ),
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  theme.primaryColor, // use primary color for gradient start
-                  theme.colorScheme.secondary, // use secondary color for gradient end
-                ],
+              _buildServiceCard(
+                localizations.aboutUs,
+                Icons.favorite,
+                theme,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => AboutUsScreen()),
+                ),
               ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    localizations.deepBreathTip,
-                    style: theme.textTheme.bodyMedium!.copyWith(
-                      color: Colors.white,
-                      fontSize: 16,
+              _buildServiceCard(
+                localizations.adviceFromSetu,
+                Icons.medication_liquid,
+                theme,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => ChatScreen(onLocaleChange: onLocaleChange),
+                  ),
+                ),
+              ),
+              _buildServiceCard(
+                localizations.audioBooksStories,
+                Icons.menu_book,
+                theme,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AudioBooksPage()
+                  ),
+                ),
+              ),
+              _buildServiceCard(
+                localizations.commonMentalHealth,
+                Icons.psychology,
+                theme,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => UnderstandCommonConditions(
+                      onLocaleSelected: onLocaleChange,
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white, // this can stay white or you can define in your theme
-                    foregroundColor: theme.primaryColor, // button text/icon color
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Container(
+            // height: 150, // <-- now Expanded will work
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [theme.primaryColor, theme.primaryColor],
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  localizations.thought,
+                  style: theme.textTheme.bodyLarge!.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
-                  child: Text(localizations.doItNow),
                 ),
+                const SizedBox(height: 10),
+                Text(
+                    localizations.thoughtOfTheDay,
+                    style: theme.textTheme.titleMedium!.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
               ],
             ),
           ),
+
           const SizedBox(height: 10),
         ],
       ),
     );
   }
 
-  Widget _buildServiceCard(String title, IconData icon, ThemeData theme) {
+  Widget _buildServiceCard(
+    String title,
+    IconData icon,
+    ThemeData theme,
+    VoidCallback onTap,
+  ) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: theme.primaryColor), // instead of Color(0xFFff6e40)
+              Icon(icon, size: 40, color: theme.primaryColor),
               const SizedBox(height: 10),
               Text(
                 title,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.bodyMedium!.copyWith(
-                  color: theme.textTheme.bodyLarge!.color, // instead of Colors.black87
+                  color: theme.textTheme.bodyLarge!.color,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -193,7 +246,8 @@ class HomeContentPage extends StatelessWidget {
 }
 
 class AdvicePage extends StatelessWidget {
-  const AdvicePage({super.key});
+  final Function(Locale) onLocaleChange;
+  const AdvicePage({super.key, required this.onLocaleChange});
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +264,8 @@ class AdvicePage extends StatelessWidget {
 }
 
 class BooksPage extends StatelessWidget {
-  const BooksPage({super.key});
+  final Function(Locale) onLocaleChange;
+  const BooksPage({super.key, required this.onLocaleChange});
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +282,8 @@ class BooksPage extends StatelessWidget {
 }
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final Function(Locale) onLocaleChange;
+  const ProfilePage({super.key, required this.onLocaleChange});
 
   @override
   Widget build(BuildContext context) {

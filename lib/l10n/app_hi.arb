@@ -55,12 +55,13 @@
     "aboutUs": "हमारे बारे में",
     "adviceFromSetu": "सेतु से सलाह लें",
     "audioBooksStories": "ऑडियो किताबें/कहानियाँ",
-    "commonMentalHealth": "सामान्य मानसिक स्वास्थ्य समस्याएँ",
-    "tipOfTheDay": "आज का सुझाव",
+    "commonMentalHealth": "सामान्य स्थितियों को समझें",
+    "thought": "आज का सुझाव",
     "deepBreathTip": "गहरी सांस लें\n5 मिनट का अभ्यास तनाव कम करता है और मन को शांत रखता है।",
     "doItNow": "अभी करें",
     "homeLabel": "होम",
     "adviceLabel": "सलाह",
     "booksLabel": "किताबें",
-    "profileLabel": "प्रोफ़ाइल"
+    "profileLabel": "प्रोफ़ाइल",
+    "thoughtOfTheDay": "हर दिन एक नई शुरुआत है — बीते हुए कल को जाने दो और आज को अपनाओ।"
 }

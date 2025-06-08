@@ -53,12 +53,13 @@
     "aboutUs": "మా గురించి",
     "adviceFromSetu": "సేతు నుండి సలహా పొందండి",
     "audioBooksStories": "ఆడియో పుస్తకాలు/కథలు",
-    "commonMentalHealth": "సాధారణ మానసిక ఆరోగ్య సమస్యలు",
-    "tipOfTheDay": "ఈ రోజు సూచన",
+    "commonMentalHealth": "సాధారణ పరిస్థితులను అర్థం చేసుకోండి",
+    "thought": "ఈ రోజు సూచన",
     "deepBreathTip": "లోతైన శ్వాస తీసుకోండి\n5 నిమిషాల సాధన ఒత్తిడిని తగ్గిస్తుంది మరియు మనసును శాంతింపజేస్తుంది.",
     "doItNow": "ఇప్పుడే చేయండి",
     "homeLabel": "హోమ్",
     "adviceLabel": "సలహా",
     "booksLabel": "పుస్తకాలు",
-    "profileLabel": "ప్రొఫైల్"
+    "profileLabel": "ప్రొఫైల్",
+    "thoughtOfTheDay": "ప్రతి శ్వాస కొత్త ఆశ. జీవితాన్ని మెల్లగా, ప్రేమగా జీవించండి."
 }

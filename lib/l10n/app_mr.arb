@@ -53,12 +53,14 @@
     "aboutUs": "आमच्याबद्दल",
     "adviceFromSetu": "सेतु कडून सल्ला घ्या",
     "audioBooksStories": "ऑडिओ पुस्तके/कथा",
-    "commonMentalHealth": "सामान्य मानसिक आरोग्य समस्या",
-    "tipOfTheDay": "दिवसाचा सल्ला",
+    "commonMentalHealth": "सामान्य परिस्थिती समजून घ्या",
+    "thought": "दिवसाचा सल्ला",
     "deepBreathTip": "दीप श्वास घ्या\n5 मिनिटांचा सराव ताण कमी करतो आणि मन शांत ठेवतो.",
     "doItNow": "आता करा",
     "homeLabel": "होम",
     "adviceLabel": "सल्ला",
     "booksLabel": "पुस्तके",
-    "profileLabel": "प्रोफाइल"
+    "profileLabel": "प्रोफाइल",
+    "thoughtOfTheDay": "मन शांत ठेवणं म्हणजे शक्तीची खरी ओळख."
+
 }

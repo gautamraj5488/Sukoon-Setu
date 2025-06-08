@@ -45,3 +45,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+// flutter gen-l10n

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sukoon_setu/screens/home_screen.dart';
 import 'package:sukoon_setu/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -17,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
+          // WelcomeScreen(onLocaleSelected: widget.onLocaleSelected)
           builder: (context) => WelcomeScreen(onLocaleSelected: widget.onLocaleSelected),
         ),
       );

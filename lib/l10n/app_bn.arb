@@ -53,12 +53,13 @@
     "aboutUs": "আমাদের সম্পর্কে",
     "adviceFromSetu": "সেতুর পরামর্শ নিন",
     "audioBooksStories": "অডিও বই/গল্প",
-    "commonMentalHealth": "সাধারণ মানসিক স্বাস্থ্য সমস্যা",
-    "tipOfTheDay": "আজকের পরামর্শ",
+    "commonMentalHealth": "সাধারণ শর্তগুলি বুঝুন",
+    "thought": "আজকের পরামর্শ",
     "deepBreathTip": "গভীর শ্বাস নিন\n৫ মিনিটের অনুশীলন চাপ কমায় এবং মনকে শান্ত করে।",
     "doItNow": "এখনই করুন",
     "homeLabel": "হোম",
     "adviceLabel": "পরামর্শ",
     "booksLabel": "বই",
-    "profileLabel": "প্রোফাইল"
+    "profileLabel": "প্রোফাইল",
+    "thoughtOfTheDay": "আজকের শান্ত মন আগামী দিনের শক্তি হয়ে ওঠে।"
 }

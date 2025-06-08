@@ -368,14 +368,14 @@ abstract class AppLocalizations {
   /// No description provided for @commonMentalHealth.
   ///
   /// In en, this message translates to:
-  /// **'Common Mental Health Issues'**
+  /// **'Understand Common Conditions'**
   String get commonMentalHealth;
 
-  /// No description provided for @tipOfTheDay.
+  /// No description provided for @thought.
   ///
   /// In en, this message translates to:
-  /// **'Tip of the Day'**
-  String get tipOfTheDay;
+  /// **'Thought of the Day'**
+  String get thought;
 
   /// No description provided for @deepBreathTip.
   ///
@@ -412,6 +412,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Profile'**
   String get profileLabel;
+
+  /// No description provided for @thoughtOfTheDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Even the smallest step toward healing counts — walk gently but keep walking.'**
+  String get thoughtOfTheDay;
+
+  /// No description provided for @diabetes.
+  ///
+  /// In en, this message translates to:
+  /// **'1. Diabetes\n\n🩺 What is Diabetes?\n\n• Diabetes is a long-term condition where your body has trouble using sugar (called glucose) from your food.\n• Normally, a hormone called insulin helps carry sugar from your blood into your body’s cells for energy.\n• In diabetes, your body either doesn\'t make enough insulin or doesn’t use it well, causing sugar to stay in your blood.\n• Too much sugar in the blood for a long time can harm your heart, kidneys, eyes, and nerves.\n⚠️ Common Symptoms (What People May Feel)\n• 🥵 Feeling very thirsty often: You may drink more water than usual and still feel dry.\n• 🚽 Frequent urination: You may go to the toilet more, especially at night.\n• 😴 Feeling tired all the time: You might feel sleepy or weak, even after resting.\n• 👀 Blurry vision: Your eyesight might suddenly seem less clear.\n• ⚖️ Losing weight without trying: This can happen even when you are eating well.\n• 🩹 Cuts that heal slowly: Small wounds or infections might take longer to get better.\n• 🦶 Numbness or tingling: You may feel pins and needles in your hands or feet.\n🧠 Why It Matters\n• Diabetes doesn\'t always show symptoms early, but over time it can cause serious health issues.\n• It increases your risk for heart problems, kidney failure, eye damage, and nerve pain.\n• If not treated, it may even lead to stroke or limb damage (requiring amputation in extreme cases).\n• The good news: with lifestyle changes and care, it can be managed well.\n✅ What You Can Do (Precautions and Home Care)\n🍽️ Eat Smarter\n• Avoid sugary snacks and soft drinks: These quickly raise your blood sugar.\n• Eat more vegetables, whole grains (like brown rice), and fresh fruits: They help control sugar levels.\n• Reduce oily and fried food: These can lead to weight gain and worsen blood sugar.\n• Don’t skip meals: Eating at regular times helps maintain balanced sugar levels.\n🏃 Stay Physically Active\n• Aim for at least 30 minutes of walking or light activity every day.\n• Simple activities like cleaning, playing with kids, or doing housework also help.\n• Physical movement helps your body use insulin better.\n📉 Manage Your Weight\n• Even small weight loss (like 5–10% of your body weight) can make a big difference in sugar control.\n• Obesity is a strong risk factor for type 2 diabetes.\n🧪 Monitor & Get Checked\n• Check your blood sugar if you are over 35, overweight, or if someone in your family has diabetes.\n• Early testing helps you take action before it becomes serious.\n🚭 Say No To...\n• Smoking: It worsens blood flow and can damage your organs faster.\n• Alcohol: It can increase or suddenly drop blood sugar, both of which are dangerous.\n• Sugary drinks: Switch to water, buttermilk, or unsweetened tea.\n🧘‍♀️ Mental and Emotional Care\n• Diabetes can be stressful. You might feel anxious or frustrated about lifestyle changes.\n• Talk to someone—friends, family, or a counselor. You\'re not alone.\n• Stress itself can raise blood sugar, so keeping calm really helps.\n📌 When to See a Doctor\n• If you notice symptoms mentioned above, especially blurred vision, tiredness, or frequent urination.\n• If you have wounds that don’t heal or numbness in hands/feet.\n• For regular sugar testing—even if you feel okay.\n'**
+  String get diabetes;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

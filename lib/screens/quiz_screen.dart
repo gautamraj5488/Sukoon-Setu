@@ -1,20 +1,460 @@
-import 'dart:async';
+// import 'dart:async';
+// import 'package:flutter/material.dart';
+// import 'package:sukoon_setu/models/user_info_model.dart';
+// import 'package:sukoon_setu/screens/chat_screen.dart';
+// import 'package:sukoon_setu/screens/home_screen.dart';
 
+// class Question {
+//   final String section;
+//   final String text;
+//   final List<String> options;
+//   Question({required this.section, required this.text, required this.options});
+// }
+
+// class QuizScreen extends StatefulWidget {
+//   final Function(Locale) onLocaleChange;
+//   final UserInfo userInfo;
+
+//   const QuizScreen({
+//     super.key,
+//     required this.userInfo,
+//     required this.onLocaleChange,
+//   });
+//   @override
+//   _QuizScreenState createState() => _QuizScreenState();
+// }
+
+// class _QuizScreenState extends State<QuizScreen> {
+//   final PageController _controller = PageController();
+//   int _currentIndex = 0;
+//   late Timer _timer;
+//   int _timeLeft = 180;
+
+//   // Track selected option index per question; null if none selected yet
+//   List<int?> _selectedOptions = [];
+
+//   final List<Question> questions = [
+//     // Section A
+//     Question(
+//       section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+//       text: 'Do you often feel sad, empty, or hopeless?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+//       text:
+//           'Have you lost interest or joy in things you once enjoyed (e.g., farming, chatting, festivals)?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+//       text: 'Do you feel tired or lack energy most days?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+//       text: 'Do you have trouble sleeping, or sleep too much?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+//       text: 'Do you feel restless, angry, or irritable for no reason?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+
+//     // Section B
+//     Question(
+//       section: "🔶 Section B: Anxiety and Stress",
+//       text:
+//           'Do you worry too much about daily things (money, health, children)?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section B: Anxiety and Stress",
+//       text:
+//           'Do you feel nervous, fearful, or tense, even when there is no clear danger?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section B: Anxiety and Stress",
+//       text: 'Do you have fast heartbeat, sweating, or shaking when anxious?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section B: Anxiety and Stress",
+//       text: 'Do you have trouble concentrating due to worry or fear?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section B: Anxiety and Stress",
+//       text:
+//           'Do you often feel something bad is going to happen, even without a reason?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+
+//     // Section C
+//     Question(
+//       section: "🔶 Section C: Thought and Behavior Changes",
+//       text: 'Do you sometimes hear voices or see things others do not?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section C: Thought and Behavior Changes",
+//       text: 'Do you believe that others are watching or trying to harm you?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section C: Thought and Behavior Changes",
+//       text:
+//           'Do you talk to yourself or act in a way that others find strange or confusing?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section C: Thought and Behavior Changes",
+//       text: 'Have you ever forgotten what you did for long periods of time?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section C: Thought and Behavior Changes",
+//       text:
+//           'Do you feel like you are not yourself, or as if you are watching your own life?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+
+//     // Section D
+//     Question(
+//       section: "🔶 Section D: Substance Use",
+//       text: 'Do you drink alcohol or take tobacco/drugs regularly?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section D: Substance Use",
+//       text: 'Do you feel you cannot stop using alcohol/drugs even if you try?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section D: Substance Use",
+//       text:
+//           'Has alcohol or drug use caused problems at home, work, or in health?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section D: Substance Use",
+//       text: 'Do you use substances to feel better when you\'re sad or anxious?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section D: Substance Use",
+//       text: 'Have people asked you to cut down on drinking or drug use?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+
+//     // Section E
+//     Question(
+//       section: "🔶 Section E: Social and Functional Impairment",
+//       text: 'Have you been avoiding people or staying alone more than before?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section E: Social and Functional Impairment",
+//       text:
+//           'Are you able to work properly or manage household responsibilities?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section E: Social and Functional Impairment",
+//       text: 'Do you feel ashamed, useless, or like a burden to others?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section E: Social and Functional Impairment",
+//       text: 'Have you ever thought about harming yourself or ending your life?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//     Question(
+//       section: "🔶 Section E: Social and Functional Impairment",
+//       text: 'Do you feel there is no reason to live?',
+//       options: ['Never', 'Sometimes', 'Often', 'Always'],
+//     ),
+//   ];
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _selectedOptions = List<int?>.filled(questions.length, null);
+//     _startTimer();
+//   }
+
+//   void _startTimer() {
+//     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+//       if (_timeLeft == 0) {
+//         _timer.cancel();
+//         _navigateToHome();
+//       } else {
+//         setState(() => _timeLeft--);
+//       }
+//     });
+//   }
+
+//   void _navigateToHome() {
+//     Navigator.of(context).pushReplacement(
+//       MaterialPageRoute(
+//         builder: (_) => ChatScreen(onLocaleChange: widget.onLocaleChange),
+//       ),
+//     );
+//   }
+
+//   void _onOptionSelected(int optionIndex) {
+//     setState(() {
+//       _selectedOptions[_currentIndex] = optionIndex;
+//     });
+//   }
+
+//   void _goNext() {
+//     if (_currentIndex < questions.length - 1) {
+//       setState(() {
+//         _currentIndex++;
+//       });
+//       _controller.nextPage(
+//         duration: Duration(milliseconds: 350),
+//         curve: Curves.easeInOut,
+//       );
+//     } else {
+//       _timer.cancel();
+//       _navigateToHome();
+//     }
+//   }
+
+//   void _goPrevious() {
+//     if (_currentIndex > 0) {
+//       setState(() {
+//         _currentIndex--;
+//       });
+//       _controller.previousPage(
+//         duration: Duration(milliseconds: 350),
+//         curve: Curves.easeInOut,
+//       );
+//     }
+//   }
+
+//   String _formatTime(int seconds) {
+//     final minutes = seconds ~/ 60;
+//     final remainingSeconds = seconds % 60;
+//     return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+//   }
+
+//   @override
+//   void dispose() {
+//     _timer.cancel();
+//     _controller.dispose();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final question = questions[_currentIndex];
+//     final selectedOption = _selectedOptions[_currentIndex];
+
+//     return Scaffold(
+//       backgroundColor: Colors.orange.shade50,
+//       appBar: AppBar(
+//         backgroundColor: Colors.deepOrange,
+//         title: Text(
+//           "🧠 Mental Health Quiz",
+//           style: TextStyle(fontWeight: FontWeight.bold),
+//         ),
+//         centerTitle: true,
+//       ),
+//       body: SafeArea(
+//         child: Padding(
+//           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               LinearProgressIndicator(
+//                 value: (_currentIndex + 1) / questions.length,
+//                 backgroundColor: Colors.orange.shade100,
+//                 valueColor: AlwaysStoppedAnimation<Color>(Colors.deepOrange),
+//                 minHeight: 8,
+//               ),
+//               SizedBox(height: 12),
+//               Align(
+//                 alignment: Alignment.centerRight,
+//                 child: Text(
+//                   "Time Left: ${_formatTime(_timeLeft)}",
+//                   style: TextStyle(
+//                     color: Colors.red.shade700,
+//                     fontWeight: FontWeight.w600,
+//                     fontSize: 16,
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(height: 20),
+//               Text(
+//                 question.section,
+//                 style: TextStyle(
+//                   fontSize: 18,
+//                   color: Colors.deepOrange.shade700,
+//                   fontWeight: FontWeight.w700,
+//                 ),
+//               ),
+//               SizedBox(height: 8),
+//               Container(
+//                 width: double.infinity,
+//                 padding: EdgeInsets.all(20),
+//                 decoration: BoxDecoration(
+//                   color: Colors.orange.shade100,
+//                   borderRadius: BorderRadius.circular(15),
+//                   boxShadow: [
+//                     BoxShadow(
+//                       color: Colors.orange.shade200.withOpacity(0.5),
+//                       blurRadius: 8,
+//                       offset: Offset(0, 4),
+//                     ),
+//                   ],
+//                 ),
+//                 child: Text(
+//                   question.text,
+//                   style: TextStyle(
+//                     fontSize: 20,
+//                     fontWeight: FontWeight.w600,
+//                     color: Colors.deepOrange.shade900,
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(height: 30),
+
+//               // Options
+//               ...List.generate(question.options.length, (index) {
+//                 final optionText = question.options[index];
+//                 final isSelected = selectedOption == index;
+
+//                 return Padding(
+//                   padding: const EdgeInsets.symmetric(vertical: 6.0),
+//                   child: ElevatedButton(
+//                     onPressed: () => _onOptionSelected(index),
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: isSelected
+//                           ? Colors.deepOrange
+//                           : Colors.white,
+//                       foregroundColor: isSelected
+//                           ? Colors.white
+//                           : Colors.deepOrange,
+//                       side: BorderSide(color: Colors.deepOrange),
+//                       padding: EdgeInsets.symmetric(
+//                         vertical: 16,
+//                         horizontal: 20,
+//                       ),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(12),
+//                       ),
+//                       elevation: isSelected ? 6 : 2,
+//                     ),
+//                     child: Row(
+//                       children: [
+//                         Icon(
+//                           isSelected
+//                               ? Icons.check_circle
+//                               : Icons.circle_outlined,
+//                           color: isSelected ? Colors.white : Colors.deepOrange,
+//                         ),
+//                         SizedBox(width: 14),
+//                         Expanded(
+//                           child: Text(
+//                             optionText,
+//                             style: TextStyle(
+//                               fontSize: 16,
+//                               fontWeight: FontWeight.w600,
+//                             ),
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                 );
+//               }),
+
+//               Spacer(),
+
+//               // Previous & Next buttons
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   // Previous
+//                   ElevatedButton.icon(
+//                     onPressed: _currentIndex > 0 ? _goPrevious : null,
+//                     icon: Icon(Icons.arrow_back),
+//                     label: Text("Previous"),
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: _currentIndex > 0
+//                           ? Colors.deepOrange
+//                           : Colors.orange.shade200,
+//                       foregroundColor: Colors.white,
+//                       padding: EdgeInsets.symmetric(
+//                         horizontal: 24,
+//                         vertical: 14,
+//                       ),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(12),
+//                       ),
+//                     ),
+//                   ),
+
+//                   // Next
+//                   ElevatedButton.icon(
+//                     onPressed: selectedOption != null ? _goNext : null,
+//                     icon: Text(
+//                       _currentIndex == questions.length - 1 ? "Finish" : "Next",
+//                       style: TextStyle(fontSize: 16),
+//                     ),
+//                     label: Icon(Icons.arrow_forward),
+//                     style: ElevatedButton.styleFrom(
+//                       backgroundColor: selectedOption != null
+//                           ? Colors.deepOrange
+//                           : Colors.orange.shade200,
+//                       foregroundColor: Colors.white,
+//                       padding: EdgeInsets.symmetric(
+//                         horizontal: 24,
+//                         vertical: 14,
+//                       ),
+//                       shape: RoundedRectangleBorder(
+//                         borderRadius: BorderRadius.circular(12),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
+import 'package:sukoon_setu/screens/chat_screen.dart';
 import 'package:sukoon_setu/screens/home_screen.dart';
+import 'package:sukoon_setu/utils/app_theme.dart';
 
 class Question {
+  final String section;
   final String text;
   final List<String> options;
-  Question({required this.text, required this.options});
+  Question({required this.section, required this.text, required this.options});
 }
 
 class QuizScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
   final UserInfo userInfo;
 
-  const QuizScreen({super.key, required this.userInfo, required this.onLocaleChange});
+  const QuizScreen({
+    super.key,
+    required this.userInfo,
+    required this.onLocaleChange,
+  });
   @override
   _QuizScreenState createState() => _QuizScreenState();
 }
@@ -23,29 +463,159 @@ class _QuizScreenState extends State<QuizScreen> {
   final PageController _controller = PageController();
   int _currentIndex = 0;
   late Timer _timer;
-  int _timeLeft = 120; // 2 minutes in seconds
+  int _timeLeft = 180;
+
+  List<int?> _selectedOptions = [];
 
   final List<Question> questions = [
+    // Section A
     Question(
-        text: 'पिछले 2 हफ्तों में, आपने कितनी बार उदास या निराश महसूस किया है?',
-        options: ['बिल्कुल नहीं', 'कुछ दिन', 'आधे से ज्यादा दिन', 'लगभग हर दिन']),
+      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+      text: 'Do you often feel sad, empty, or hopeless?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
     Question(
-        text: 'क्या आप रोज़ाना के काम में मज़ा या दिलचस्पी कम महसूस करते हैं?',
-        options: ['बिल्कुल नहीं', 'कुछ दिन', 'आधे से ज्यादा दिन', 'लगभग हर दिन']),
+      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+      text:
+          'Have you lost interest or joy in things you once enjoyed (e.g., farming, chatting, festivals)?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
     Question(
-        text: 'क्या आपको सोने में परेशानी होती है या बहुत ज्यादा नींद आती है?',
-        options: ['बिल्कुल नहीं', 'कुछ दिन', 'आधे से ज्यादा दिन', 'लगभग हर दिन']),
+      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+      text: 'Do you feel tired or lack energy most days?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
     Question(
-        text: 'क्या आप थका हुआ या कम एनर्जी महसूस करते हैं?',
-        options: ['बिल्कुल नहीं', 'कुछ दिन', 'आधे से ज्यादा दिन', 'लगभग हर दिन']),
+      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+      text: 'Do you have trouble sleeping, or sleep too much?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
     Question(
-        text: 'क्या आपको ध्यान लगाने में परेशानी होती है?',
-        options: ['बिल्कुल नहीं', 'कुछ दिन', 'आधे से ज्यादा दिन', 'लगभग हर दिन']),
+      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
+      text: 'Do you feel restless, angry, or irritable for no reason?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+
+    // Section B
+    Question(
+      section: "🔶 Section B: Anxiety and Stress",
+      text:
+          'Do you worry too much about daily things (money, health, children)?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section B: Anxiety and Stress",
+      text:
+          'Do you feel nervous, fearful, or tense, even when there is no clear danger?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section B: Anxiety and Stress",
+      text: 'Do you have fast heartbeat, sweating, or shaking when anxious?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section B: Anxiety and Stress",
+      text: 'Do you have trouble concentrating due to worry or fear?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section B: Anxiety and Stress",
+      text:
+          'Do you often feel something bad is going to happen, even without a reason?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+
+    // Section C
+    Question(
+      section: "🔶 Section C: Thought and Behavior Changes",
+      text: 'Do you sometimes hear voices or see things others do not?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section C: Thought and Behavior Changes",
+      text: 'Do you believe that others are watching or trying to harm you?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section C: Thought and Behavior Changes",
+      text:
+          'Do you talk to yourself or act in a way that others find strange or confusing?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section C: Thought and Behavior Changes",
+      text: 'Have you ever forgotten what you did for long periods of time?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section C: Thought and Behavior Changes",
+      text:
+          'Do you feel like you are not yourself, or as if you are watching your own life?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+
+    // Section D
+    Question(
+      section: "🔶 Section D: Substance Use",
+      text: 'Do you drink alcohol or take tobacco/drugs regularly?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section D: Substance Use",
+      text: 'Do you feel you cannot stop using alcohol/drugs even if you try?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section D: Substance Use",
+      text:
+          'Has alcohol or drug use caused problems at home, work, or in health?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section D: Substance Use",
+      text: 'Do you use substances to feel better when you\'re sad or anxious?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section D: Substance Use",
+      text: 'Have people asked you to cut down on drinking or drug use?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+
+    // Section E
+    Question(
+      section: "🔶 Section E: Social and Functional Impairment",
+      text: 'Have you been avoiding people or staying alone more than before?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section E: Social and Functional Impairment",
+      text:
+          'Are you able to work properly or manage household responsibilities?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section E: Social and Functional Impairment",
+      text: 'Do you feel ashamed, useless, or like a burden to others?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section E: Social and Functional Impairment",
+      text: 'Have you ever thought about harming yourself or ending your life?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
+    Question(
+      section: "🔶 Section E: Social and Functional Impairment",
+      text: 'Do you feel there is no reason to live?',
+      options: ['Never', 'Sometimes', 'Often', 'Always'],
+    ),
   ];
 
   @override
   void initState() {
     super.initState();
+    _selectedOptions = List<int?>.filled(questions.length, null);
     _startTimer();
   }
 
@@ -62,20 +632,42 @@ class _QuizScreenState extends State<QuizScreen> {
 
   void _navigateToHome() {
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => HomeScreen(onLocaleChange: widget.onLocaleChange,)),
+      MaterialPageRoute(
+        builder: (_) => ChatScreen(onLocaleChange: widget.onLocaleChange),
+      ),
     );
   }
 
-  void _onOptionSelected() {
+  void _onOptionSelected(int optionIndex) {
+    setState(() {
+      _selectedOptions[_currentIndex] = optionIndex;
+    });
+  }
+
+  void _goNext() {
     if (_currentIndex < questions.length - 1) {
-      setState(() => _currentIndex++);
+      setState(() {
+        _currentIndex++;
+      });
       _controller.nextPage(
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 350),
         curve: Curves.easeInOut,
       );
     } else {
       _timer.cancel();
       _navigateToHome();
+    }
+  }
+
+  void _goPrevious() {
+    if (_currentIndex > 0) {
+      setState(() {
+        _currentIndex--;
+      });
+      _controller.previousPage(
+        duration: Duration(milliseconds: 350),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
@@ -88,90 +680,191 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void dispose() {
     _timer.cancel();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final question = questions[_currentIndex];
+    final selectedOption = _selectedOptions[_currentIndex];
+
     return Scaffold(
-      backgroundColor: Colors.teal[50],
+      backgroundColor: theme.colorScheme.background,
+      appBar: AppBar(
+        backgroundColor: theme.primaryColor,
+        title: Text(
+          "🧠 Mental Health Quiz",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: theme.appBarTheme.foregroundColor,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
-        child: PageView.builder(
-          controller: _controller,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: questions.length,
-          itemBuilder: (context, index) {
-            final question = questions[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Text("मानसिक स्वास्थ्य मूल्यांकन",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.teal[800])),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              LinearProgressIndicator(
+                value: (_currentIndex + 1) / questions.length,
+                backgroundColor: theme.colorScheme.primary.withOpacity(0.3),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  theme.colorScheme.primary,
+                ),
+                minHeight: 8,
+              ),
+              SizedBox(height: 12),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "Time Left: ${_formatTime(_timeLeft)}",
+                  style: TextStyle(
+                    color: theme.colorScheme.error,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
                   ),
-                  SizedBox(height: 20),
-                  LinearProgressIndicator(
-                    value: (index + 1) / questions.length,
-                    backgroundColor: Colors.teal[100],
-                    valueColor: AlwaysStoppedAnimation(Colors.teal),
-                  ),
-                  SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      "समय बचा है: ${_formatTime(_timeLeft)}",
-                      style: TextStyle(color: Colors.red, fontSize: 16),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text(
+                question.section,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: theme.colorScheme.primary,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height: 8),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.secondary.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.colorScheme.secondary.withOpacity(0.5),
+                      blurRadius: 1,
                     ),
+                  ],
+                ),
+                child: Text(
+                  question.text,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
                   ),
-                  SizedBox(height: 30),
-                  Text("प्रश्न ${index + 1} / ${questions.length}",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 10),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2))
-                      ],
+                ),
+              ),
+              SizedBox(height: 30),
+
+              // Options
+              ...List.generate(question.options.length, (index) {
+                final optionText = question.options[index];
+                final isSelected = selectedOption == index;
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
+                  child: ElevatedButton(
+                    onPressed: () => _onOptionSelected(index),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.surface,
+                      foregroundColor: isSelected
+                          ? theme.colorScheme.onPrimary
+                          : theme.colorScheme.primary,
+                      side: BorderSide(color: theme.colorScheme.primary),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 20,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: isSelected ? 6 : 2,
                     ),
-                    child: Text(
-                      question.text,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  ...question.options.map((option) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
-                        child: ElevatedButton(
-                          onPressed: _onOptionSelected,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: Colors.black,
-                            side: BorderSide(color: Colors.teal),
-                            padding: EdgeInsets.symmetric(vertical: 14),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.circle_outlined, size: 18),
-                              SizedBox(width: 10),
-                              Expanded(child: Text(option)),
-                            ],
+                    child: Row(
+                      children: [
+                        Icon(
+                          isSelected
+                              ? Icons.check_circle
+                              : Icons.circle_outlined,
+                          color: isSelected
+                              ? theme.colorScheme.onPrimary
+                              : theme.colorScheme.primary,
+                        ),
+                        SizedBox(width: 14),
+                        Expanded(
+                          child: Text(
+                            optionText,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
-                      ))
+                      ],
+                    ),
+                  ),
+                );
+              }),
+
+              Spacer(),
+
+              // Previous & Next buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _currentIndex > 0 ? _goPrevious : null,
+                    icon: Icon(Icons.arrow_back),
+                    label: Text("Previous"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: _currentIndex > 0
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.primary.withOpacity(0.3),
+                      foregroundColor: theme.colorScheme.onPrimary,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 14,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+
+                  ElevatedButton.icon(
+                    onPressed: selectedOption != null ? _goNext : null,
+                    icon: Text(
+                      _currentIndex == questions.length - 1 ? "Finish" : "Next",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    label: Icon(Icons.arrow_forward),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: selectedOption != null
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.primary.withOpacity(0.3),
+                      foregroundColor: theme.colorScheme.onPrimary,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 14,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );

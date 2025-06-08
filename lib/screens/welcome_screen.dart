@@ -7,35 +7,34 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      backgroundColor: theme.colorScheme.background,
       body: SafeArea(
         child: Column(
           children: [
             const SizedBox(height: 60),
-            const Icon(
+            Icon(
               Icons.self_improvement,
               size: 60,
-              color: Colors.deepOrange,
+              color: theme.colorScheme.primary,
             ),
             const SizedBox(height: 20),
-            const Text(
+            Text(
               'SukoonSetu',
-              style: TextStyle(
-                fontSize: 32,
+              style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 10),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Text(
                 'Bridging Minds to Peace.\nDigital Mental Health Support for All.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black54,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onBackground.withOpacity(0.7),
                 ),
               ),
             ),
@@ -46,10 +45,17 @@ class WelcomeScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PhoneOtpLoginPage(onLocaleSelected: onLocaleSelected)));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PhoneOtpLoginPage(
+                            onLocaleSelected: onLocaleSelected,
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepOrange,
+                      backgroundColor: theme.colorScheme.primary,
                       minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -57,21 +63,28 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     child: const Text(
                       'Register',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
+                  Text(
                     'Already Registered? Login',
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onBackground.withOpacity(0.6),
+                    ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 40),
-            const Text(
+            Text(
               'Your companion on your mental health journey',
-              style: TextStyle(fontSize: 12, color: Colors.grey),
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.colorScheme.onBackground.withOpacity(0.5),
+              ),
             ),
             const SizedBox(height: 20),
           ],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/home_screen.dart';
-import 'package:sukoon_setu/screens/quiz_screen.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -25,20 +24,24 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   String? selectedGender;
 
   InputDecoration customInputDecoration(String label, String hint) {
+    final theme = Theme.of(context);
     return InputDecoration(
       labelText: label,
       hintText: hint,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-      hintStyle: const TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(color: theme.hintColor),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      filled: true,
+      fillColor: theme.colorScheme.surface,
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
 
     final genders = [
@@ -48,17 +51,25 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      // ignore: deprecated_member_use
+      backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         title: Text(
           localizations.personalInfoTitle,
-          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            // ignore: deprecated_member_use
+            color: theme.colorScheme.onBackground,
+          ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFFFF7F0),
-        foregroundColor: Colors.black87,
+        // ignore: deprecated_member_use
+        backgroundColor: theme.colorScheme.background,
+        // ignore: deprecated_member_use
+        foregroundColor: theme.colorScheme.onBackground,
         elevation: 0,
-        leading: const BackButton(color: Colors.black87),
+        // ignore: deprecated_member_use
+        leading: BackButton(color: theme.colorScheme.onBackground),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -66,16 +77,19 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           key: _formKey,
           child: Column(
             children: [
-              const Icon(Icons.person_outline, size: 60, color: Colors.deepOrange),
+              Icon(Icons.person_outline, size: 60, color: theme.colorScheme.primary),
               const SizedBox(height: 12),
               Text(
                 localizations.tellUsAboutYou,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
               Text(
                 localizations.helpUsServeBetter,
-                style: const TextStyle(fontSize: 14, color: Colors.black54),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  // ignore: deprecated_member_use
+                  color: theme.colorScheme.onBackground.withOpacity(0.6),
+                ),
               ),
               const SizedBox(height: 24),
 
@@ -182,7 +196,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange,
+                    backgroundColor: theme.colorScheme.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -190,10 +204,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   ),
                   child: Text(
                     localizations.ccontinue,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onPrimary,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                   ),
                 ),

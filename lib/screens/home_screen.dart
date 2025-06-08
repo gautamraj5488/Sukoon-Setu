@@ -13,10 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    HomeContentPage(),
-    AdvicePage(),
-    BooksPage(),
-    ProfilePage(),
+    const HomeContentPage(),
+    const AdvicePage(),
+    const BooksPage(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -28,16 +28,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFFff6e40),
-        unselectedItemColor: Colors.grey.shade600,
+        backgroundColor: theme.colorScheme.surface, // instead of Colors.white
+        selectedItemColor: theme.primaryColor, // instead of Color(0xFFff6e40)
+        unselectedItemColor: Colors.grey.shade600, // can keep grey here or add to AppColors
         showUnselectedLabels: true,
         items: [
           BottomNavigationBarItem(
@@ -62,38 +63,41 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// This is your original home content extracted
 class HomeContentPage extends StatelessWidget {
   const HomeContentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             localizations.greeting,
-            style: const TextStyle(
+            style: theme.textTheme.bodyLarge!.copyWith(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Colors.deepOrange,
+              color: theme.primaryColor, // instead of Colors.deepOrange
             ),
           ),
           Text(
             localizations.howWasYourDay,
-            style: const TextStyle(fontSize: 18, color: Colors.black87),
+            style: theme.textTheme.bodyMedium!.copyWith(
+              fontSize: 18,
+              color: theme.textTheme.bodyLarge!.color, // usually primary text color
+            ),
           ),
           const SizedBox(height: 30),
           Text(
             localizations.services,
-            style: const TextStyle(
+            style: theme.textTheme.bodyLarge!.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.deepOrange,
+              color: theme.primaryColor, // instead of Colors.deepOrange
             ),
           ),
           const SizedBox(height: 10),
@@ -104,36 +108,30 @@ class HomeContentPage extends StatelessWidget {
             mainAxisSpacing: 10,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              _buildServiceCard(localizations.aboutUs, Icons.favorite),
-              _buildServiceCard(
-                localizations.adviceFromSetu,
-                Icons.medication_liquid,
-              ),
-              _buildServiceCard(
-                localizations.audioBooksStories,
-                Icons.menu_book,
-              ),
-              _buildServiceCard(
-                localizations.commonMentalHealth,
-                Icons.psychology,
-              ),
+              _buildServiceCard(localizations.aboutUs, Icons.favorite, theme),
+              _buildServiceCard(localizations.adviceFromSetu, Icons.medication_liquid, theme),
+              _buildServiceCard(localizations.audioBooksStories, Icons.menu_book, theme),
+              _buildServiceCard(localizations.commonMentalHealth, Icons.psychology, theme),
             ],
           ),
           const SizedBox(height: 30),
           Text(
             localizations.tipOfTheDay,
-            style: const TextStyle(
+            style: theme.textTheme.bodyLarge!.copyWith(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.deepOrange,
+              color: theme.primaryColor, // instead of Colors.deepOrange
             ),
           ),
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFFff6e40), Color(0xFFff8e53)],
+              gradient: LinearGradient(
+                colors: [
+                  theme.primaryColor, // use primary color for gradient start
+                  theme.colorScheme.secondary, // use secondary color for gradient end
+                ],
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -143,14 +141,17 @@ class HomeContentPage extends StatelessWidget {
                 Expanded(
                   child: Text(
                     localizations.deepBreathTip,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    foregroundColor: const Color(0xFFff6e40),
+                    backgroundColor: Colors.white, // this can stay white or you can define in your theme
+                    foregroundColor: theme.primaryColor, // button text/icon color
                   ),
                   child: Text(localizations.doItNow),
                 ),
@@ -158,34 +159,12 @@ class HomeContentPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-
-          // GridView.builder(
-          //   shrinkWrap: true,
-          //   physics:NeverScrollableScrollPhysics(), // so it doesn’t scroll independently inside another scroll view
-          //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //     crossAxisCount: 2, // 2 columns
-          //     crossAxisSpacing: 10, // horizontal spacing between items
-          //     mainAxisSpacing: 10, // vertical spacing between items
-          //     childAspectRatio:
-          //         1.0, // width / height ratio of each grid item (adjust as needed)
-          //   ),
-          //   itemCount: 9, // or your list length
-          //   itemBuilder: (context, index) {
-          //     return Container(
-          //       margin: EdgeInsets.all(12),
-          //       decoration: BoxDecoration(
-          //         color: Colors.grey,
-          //         border: Border.all(width: 1, color: Colors.deepPurple),
-          //       ),
-          //     );
-          //   },
-          // ),
         ],
       ),
     );
   }
 
-  Widget _buildServiceCard(String title, IconData icon) {
+  Widget _buildServiceCard(String title, IconData icon, ThemeData theme) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       elevation: 2,
@@ -195,13 +174,13 @@ class HomeContentPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: const Color(0xFFff6e40)),
+              Icon(icon, size: 40, color: theme.primaryColor), // instead of Color(0xFFff6e40)
               const SizedBox(height: 10),
               Text(
                 title,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.black87,
+                style: theme.textTheme.bodyMedium!.copyWith(
+                  color: theme.textTheme.bodyLarge!.color, // instead of Colors.black87
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -219,10 +198,12 @@ class AdvicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
     return Center(
       child: Text(
         localizations.adviceLabel,
-        style: const TextStyle(fontSize: 24),
+        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
       ),
     );
   }
@@ -234,10 +215,12 @@ class BooksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
     return Center(
       child: Text(
         localizations.booksLabel,
-        style: const TextStyle(fontSize: 24),
+        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
       ),
     );
   }
@@ -249,10 +232,12 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
     return Center(
       child: Text(
         localizations.profileLabel,
-        style: const TextStyle(fontSize: 24),
+        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
       ),
     );
   }

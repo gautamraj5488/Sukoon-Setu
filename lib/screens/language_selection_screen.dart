@@ -33,18 +33,20 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           localizations.chooseLanguage,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         leading: const BackButton(),
-        backgroundColor: const Color(0xFFFFF7F0),
-        foregroundColor: Colors.black87,
-        elevation: 0,
+        backgroundColor: theme.appBarTheme.backgroundColor,
+        foregroundColor: theme.appBarTheme.foregroundColor,
+        elevation: theme.appBarTheme.elevation,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -52,17 +54,17 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 30),
-            const Icon(Icons.language, size: 60, color: Colors.deepOrange),
+            Icon(Icons.language, size: 60, color: theme.primaryColor),
             const SizedBox(height: 20),
             Text(
               localizations.selectLanguage,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               localizations.languageServicePrompt,
-              style: TextStyle(fontSize: 14, color: Colors.black54),
+              style: theme.textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
@@ -85,12 +87,12 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: selectedLanguageCode == lang['code']
-                          ? Colors.deepOrange
+                          ? theme.primaryColor
                           : Colors.grey.shade300,
                       width: 2,
                     ),
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
+                    color: theme.colorScheme.surface,
                   ),
                   child: Row(
                     children: [
@@ -98,7 +100,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       const SizedBox(width: 12),
                       Text(
                         lang['label']!,
-                        style: const TextStyle(fontSize: 16),
+                        style: theme.textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -107,6 +109,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
             ),
 
             const SizedBox(height: 40), // replaces Spacer()
+
             // Continue Button
             SizedBox(
               width: double.infinity,
@@ -123,14 +126,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                           ),
                         );
                       },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  disabledBackgroundColor: Colors.grey.shade300,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                // style is from your AppTheme.elevatedButtonTheme so no need to specify here unless you want to override
                 child: Text(
                   continueTexts[selectedLanguageCode] ?? "आगे बढ़ें",
                   style: const TextStyle(
@@ -148,6 +144,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     );
   }
 }
+
 
 // Eglish
 // Hindi

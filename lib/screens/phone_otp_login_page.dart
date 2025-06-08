@@ -22,19 +22,24 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
   }
 
   void _verifyOtp() {
-    // Implement OTP verification logic here
     if (_otpCode.length == 6) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LanguageSelectionScreen(onLocaleChange: widget.onLocaleSelected,)),
+        MaterialPageRoute(
+          builder: (context) => LanguageSelectionScreen(
+            onLocaleChange: widget.onLocaleSelected,
+          ),
+        ),
       );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      backgroundColor: theme.colorScheme.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
@@ -42,24 +47,24 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 60),
-              const Icon(
+              Icon(
                 Icons.lock_outline,
                 size: 60,
-                color: Colors.deepOrange,
+                color: theme.colorScheme.primary,
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 'Login with Phone',
-                style: TextStyle(
-                  fontSize: 28,
+                style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Secure and simple login experience',
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onBackground.withOpacity(0.6),
+                ),
               ),
               const SizedBox(height: 40),
 
@@ -70,7 +75,7 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
                   labelText: 'Phone Number',
                   prefixText: '+91 ',
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: theme.colorScheme.surface,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -79,9 +84,11 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
               const SizedBox(height: 20),
 
               if (_otpSent) ...[
-                const Text(
+                Text(
                   'Enter the 6-digit OTP sent to your phone',
-                  style: TextStyle(fontSize: 14, color: Colors.black54),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.colorScheme.onBackground.withOpacity(0.6),
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 10),
@@ -91,23 +98,22 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
                   defaultPinTheme: PinTheme(
                     width: 48,
                     height: 56,
-                    textStyle: const TextStyle(fontSize: 20),
+                    textStyle: theme.textTheme.titleLarge,
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.deepOrange),
+                      color: theme.colorScheme.surface,
+                      border: Border.all(color: theme.colorScheme.primary),
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
               ],
 
-
               const SizedBox(height: 30),
 
               ElevatedButton(
                 onPressed: _otpSent ? _verifyOtp : _sendOtp,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
+                  backgroundColor: theme.colorScheme.primary,
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -120,9 +126,11 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
               ),
 
               const Spacer(),
-              const Text(
+              Text(
                 'Need help? Contact Support',
-                style: TextStyle(fontSize: 12, color: Colors.grey),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onBackground.withOpacity(0.5),
+                ),
               ),
               const SizedBox(height: 20),
             ],

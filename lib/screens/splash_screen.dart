@@ -25,27 +25,27 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Get the current theme
+
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF7F0),
+      backgroundColor: theme.colorScheme.background,
       body: SafeArea(
         child: Stack(
           children: [
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     Icons.self_improvement,
                     size: 80,
-                    color: Colors.deepOrange,
+                    color: theme.colorScheme.primary,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     'SukoonSetu',
-                    style: TextStyle(
-                      fontSize: 36,
+                    style: theme.textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
                       letterSpacing: 1.5,
                     ),
                   ),

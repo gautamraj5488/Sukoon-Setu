@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart'; // generated localization class import
-import 'package:sukoon_setu/screens/splash_screen.dart';
+import 'package:sukoon_setu/screens/splash_page.dart';
 import 'package:sukoon_setu/utils/app_theme.dart';
 
 void main() {

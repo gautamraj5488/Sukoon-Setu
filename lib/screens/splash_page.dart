@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sukoon_setu/screens/home_screen.dart';
-import 'package:sukoon_setu/screens/welcome_screen.dart';
+import 'package:sukoon_setu/screens/home_page.dart';
+import 'package:sukoon_setu/screens/welcome_page.dart';
 
 class SplashScreen extends StatefulWidget {
   final Function(Locale) onLocaleSelected;

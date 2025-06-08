@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/about_us.dart';
-import 'package:sukoon_setu/screens/audio_books.dart';
-import 'package:sukoon_setu/screens/chat_screen.dart';
+import 'package:sukoon_setu/screens/audio_books_page.dart';
+import 'package:sukoon_setu/screens/breathing_techniques_page.dart';
+import 'package:sukoon_setu/screens/chat_page.dart';
+import 'package:sukoon_setu/screens/profile_page.dart';
 import 'package:sukoon_setu/screens/quiz_screen.dart';
-import 'package:sukoon_setu/screens/understand_common_conditions.dart';
+import 'package:sukoon_setu/screens/understand_common_conditions_page.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -28,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       HomeContentPage(onLocaleChange: widget.onLocaleChange),
-      AdvicePage(onLocaleChange: widget.onLocaleChange),
-      BooksPage(onLocaleChange: widget.onLocaleChange),
+      ChatScreen(onLocaleChange: widget.onLocaleChange),
+      AboutUsScreen(),
       ProfilePage(onLocaleChange: widget.onLocaleChange),
     ];
 
@@ -57,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: localizations.adviceLabel,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(Icons.menu_book),
-            label: localizations.booksLabel,
+            icon: const Icon(Icons.favorite_rounded),
+            label: localizations.aboutUs,
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.person),
@@ -128,12 +130,12 @@ class HomeContentPage extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             children: [
               _buildServiceCard(
-                localizations.aboutUs,
-                Icons.favorite,
+                localizations.breathingTechniques,
+                Icons.air_rounded,
                 theme,
                 () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => AboutUsScreen()),
+                  MaterialPageRoute(builder: (_) => BreathingTechniquesPage()),
                 ),
               ),
               _buildServiceCard(
@@ -240,60 +242,6 @@ class HomeContentPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class AdvicePage extends StatelessWidget {
-  final Function(Locale) onLocaleChange;
-  const AdvicePage({super.key, required this.onLocaleChange});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Text(
-        localizations.adviceLabel,
-        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class BooksPage extends StatelessWidget {
-  final Function(Locale) onLocaleChange;
-  const BooksPage({super.key, required this.onLocaleChange});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Text(
-        localizations.booksLabel,
-        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
-      ),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  final Function(Locale) onLocaleChange;
-  const ProfilePage({super.key, required this.onLocaleChange});
-
-  @override
-  Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return Center(
-      child: Text(
-        localizations.profileLabel,
-        style: theme.textTheme.bodyLarge!.copyWith(fontSize: 24),
       ),
     );
   }

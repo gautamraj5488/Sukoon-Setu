@@ -435,8 +435,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
-import 'package:sukoon_setu/screens/chat_screen.dart';
-import 'package:sukoon_setu/screens/home_screen.dart';
+import 'package:sukoon_setu/screens/chat_page.dart';
+import 'package:sukoon_setu/screens/home_page.dart';
 import 'package:sukoon_setu/utils/app_theme.dart';
 
 class Question {

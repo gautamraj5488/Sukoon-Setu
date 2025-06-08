@@ -61,6 +61,21 @@
     "adviceLabel": "सल्ला",
     "booksLabel": "पुस्तके",
     "profileLabel": "प्रोफाइल",
-    "thoughtOfTheDay": "मन शांत ठेवणं म्हणजे शक्तीची खरी ओळख."
+    "thoughtOfTheDay": "मन शांत ठेवणं म्हणजे शक्तीची खरी ओळख.",
+  "breathingTechniques": "श्वसन तंत्र",
+
+  "audioBook1": "सकारात्मक विचारशक्ती",
+  "audioBook2": "ग्रामीण भारत आणि मानसिक आरोग्य",
+  "audioBook1Link": "https://www.youtube.com/watch?v=wsNW00J-IIQ",
+  "audioBook2Link": "https://www.youtube.com/watch?v=EiOzFwjFZhQ",
+
+  "yogaLink": "https://www.youtube.com/watch?pp=0gcJCdgAo7VqN5tD&v=W-e55pc4ZSk",
+  "meditationLink": "https://www.youtube.com/watch?v=UOleP6F4hi8",
+
+    "breathingAnxietyWorry": "नाकाद्वारे 4 सेकंद श्वास घ्या\n7 सेकंद थांबवा\nतोंडाने 8 सेकंद हळू हळू सोडा\nहे 4 वेळा करा",
+  "breathingAnger": "नाकातून खोल श्वास घ्या\nहळूच “हम्म्म” असा आवाज करून उत्सर्जित करा\nकंपनावर लक्ष केंद्रित करा\n5 ते 10 वेळा करा",
+  "breathingStressIrritation": "उजवे नाक बंद करा, डाव्या नाकाने श्वास घ्या\nडावे बंद करा, उजव्या नाकाने श्वास सोडा\nउजव्या नाकाने श्वास घ्या, डाव्या नाकाने सोडा\n2 ते 5 मिनिटे करा",
+  "breathingSadness": "पोटावर हात ठेवा\nनाकाने श्वास घ्या, पोट वर येतेय का बघा\nतोंडाने श्वास सोडा, पोट खाली येतेय का बघा\n3 ते 5 मिनिटे करा",
+  "breathingCalming": "नाकाने 4 सेकंद श्वास घ्या\n1 सेकंद थांबा\n4 सेकंद श्वास सोडा\n1 सेकंद थांबा\n5 ते 10 वेळा करा"
 
 }

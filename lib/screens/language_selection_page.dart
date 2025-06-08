@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
-import 'package:sukoon_setu/screens/personal_info_screen.dart';
+import 'package:sukoon_setu/screens/personal_info_page.dart';
 
 class LanguageSelectionScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;

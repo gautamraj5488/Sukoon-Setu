@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
-import 'package:sukoon_setu/screens/home_screen.dart';
+import 'package:sukoon_setu/screens/home_page.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;

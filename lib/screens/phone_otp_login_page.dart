@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:sukoon_setu/screens/language_selection_screen.dart';
+import 'package:sukoon_setu/screens/language_selection_page.dart';
 
 class PhoneOtpLoginPage extends StatefulWidget {
   final Function(Locale) onLocaleSelected;

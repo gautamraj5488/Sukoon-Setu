@@ -61,5 +61,19 @@
     "adviceLabel": "পরামর্শ",
     "booksLabel": "বই",
     "profileLabel": "প্রোফাইল",
-    "thoughtOfTheDay": "আজকের শান্ত মন আগামী দিনের শক্তি হয়ে ওঠে।"
+    "thoughtOfTheDay": "আজকের শান্ত মন আগামী দিনের শক্তি হয়ে ওঠে।",
+  "breathingTechniques": "শ্বাস-প্রশ্বাসের কৌশল",
+
+  "audioBook1": "ইতিবাচক চিন্তার শক্তি",
+  "audioBook2": "গ্রামীণ ভারতের মানসিক স্বাস্থ্য",
+  "audioBook1Link": "https://www.youtube.com/watch?v=wsNW00J-IIQ",
+  "audioBook2Link": "https://www.youtube.com/watch?v=EiOzFwjFZhQ",
+
+  "yogaLink": "https://youtu.be/Mi05d402fzs",
+  "meditationLink": "https://www.youtube.com/watch?v=K-tg_Axr99U",
+    "breathingAnxietyWorry": "নাক দিয়ে ৪ সেকেন্ড শ্বাস নিন\n৭ সেকেন্ড ধরে রাখুন\nমুখ দিয়ে ৮ সেকেন্ডে ধীরে ধীরে শ্বাস ছাড়ুন\nএটি ৪ বার করুন",
+  "breathingAnger": "নাক দিয়ে গভীর শ্বাস নিন\nধীরে একটু “হмм্ম” শব্দ করে ছাড়ুন\nকম্পনের প্রতি মনোযোগ দিন\n৫–১০ বার করুন",
+  "breathingStressIrritation": "ডান নাক বন্ধ করে বাম নাক দিয়ে শ্বাস নিন\nবাম বন্ধ করে ডান দিয়ে ছাড়ুন\nডান দিয়ে শ্বাস নিয়ে বাম দিয়ে ছাড়ুন\n২–৫ মিনিট করুন",
+  "breathingSadness": "উদরে একটি হাত রাখুন\nনাক দিয়ে ধীরে শ্বাস নিন, পেট ফুলে উঠছে দেখে নিন\nমুখ দিয়ে ছাড়ুন, পেট নামছে দেখে নিন\n৩–৫ মিনিট করুন",
+  "breathingCalming": "নাক দিয়ে ৪ সেকেন্ড শ্বাস নিন\n১ সেকেন্ড থামুন\n৪ সেকেন্ডে ছাড়ুন\n১ সেকেন্ড বিরতি\n৫–১০ বার করুন"
 }

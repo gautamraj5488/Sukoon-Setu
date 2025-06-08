@@ -61,5 +61,20 @@
     "adviceLabel": "సలహా",
     "booksLabel": "పుస్తకాలు",
     "profileLabel": "ప్రొఫైల్",
-    "thoughtOfTheDay": "ప్రతి శ్వాస కొత్త ఆశ. జీవితాన్ని మెల్లగా, ప్రేమగా జీవించండి."
+    "thoughtOfTheDay": "ప్రతి శ్వాస కొత్త ఆశ. జీవితాన్ని మెల్లగా, ప్రేమగా జీవించండి.",
+  "breathingTechniques": "శ్వాస ప్రయత్నాలు",
+
+  "audioBook1": "యు కెన్ విన్ ",
+  "audioBook2": "గ్రామీణ భారత్‌లో మానసిక ఆరోగ్యం",
+  "audioBook1Link": "https://www.youtube.com/playlist?list=PLkeDSkG7KAx_28WVQJG0KJ2JnNTmsTkZ8",
+  "audioBook2Link": "https://www.youtube.com/watch?v=-WigJjuzsX0",
+
+  "yogaLink": "https://www.youtube.com/watch?v=yrNNH92sqTw",
+  "meditationLink": "https://www.youtube.com/watch?v=iq-ArRVnDFk",
+  "breathingAnxietyWorry": "నాసిక ద్వారా 4 సెకన్లపాటు ఊపిరి తీసుకోండి\n7 సెకన్లు నిలిపి ఉంచండి\nనోరు మూసుకుని 8 సెకన్లలో ఊపిరి విడదీయండి\n4 సార్లు చేయండి",
+"breathingAnger": "నాసిక ద్వారా లోతైన ఊపిరి తీసుకోండి\nమృదువుగా “హమ్మ్మ్” శబ్దం చేస్తూ ఊపిరి విడదీయండి\nఆ శబ్దం పైన దృష్టి పెట్టండి\n5–10 సార్లు చేయండి",
+"breathingStressIrritation": "కుడి నాసిక మూసి, ఎడమద్వారా శ్వాస తీసుకోండి\nఎడమ మూసి, కుడి నాసిక తెరిచి వదలండి\nకుడి ద్వారానే శ్వాస తీసుకొని ఎడమ ద్వారానే వదలండి\n2 నుండి 5 నిమిషాలు చేయండి",
+"breathingSadness": "ఒక చేయిని బొడ్డుపై ఉంచండి\nనాసిక ద్వారా లోతుగా శ్వాస తీసుకోండి, పేగు పైకి రావడం చూసుకోండి\nనోరు ద్వారా విడదీయండి, పేగు క్రిందికి పోవడం చూసుకోండి\n3–5 నిమిషాలు చేయండి",
+"breathingCalming": "నాసిక ద్వారా 4 సెకన్లపాటు శ్వాస తీసుకోండి\n1 సెకను ఆపు\n4 సెకన్లలో శ్వాస విడదీయండి\n1 సెకను ఆపు\n5–10 సార్లు చేయండి"
+
 }

@@ -63,5 +63,23 @@
     "adviceLabel": "सलाह",
     "booksLabel": "किताबें",
     "profileLabel": "प्रोफ़ाइल",
-    "thoughtOfTheDay": "हर दिन एक नई शुरुआत है — बीते हुए कल को जाने दो और आज को अपनाओ।"
+    "thoughtOfTheDay": "हर दिन एक नई शुरुआत है — बीते हुए कल को जाने दो और आज को अपनाओ।",
+  "breathingTechniques": "श्वास तकनीकें",
+
+
+
+  "audioBook1": "सकारात्मक सोच की शक्ति",
+  "audioBook2": "पूस की रात",
+  "audioBook1Link": "https://www.youtube.com/watch?v=PLNP-2RnMGo",
+  "audioBook2Link": "https://www.youtube.com/watch?v=XZ7Rk4F7qdk",
+
+  "yogaLink": "https://www.youtube.com/watch?v=FyFUowFFYC4",
+
+  "meditationLink": "https://www.youtube.com/watch?v=MM2AlsasYD8",
+  "breathingAnxietyWorry": "नाक से 4 सेकंड सांस लें\n7 सेकंड रोके रखें\nमुंह से 8 सेकंड में धीरे-धीरे छोड़ें\nइसे 4 बार करें",
+"breathingAnger": "नाक से गहरी सांस लें\nधीरे-धीरे “हम्म्म” की आवाज निकालें\nकंपन पर ध्यान दें\n5 से 10 बार दोहराएँ",
+"breathingStressIrritation": "दाएँ नथुने को बंद करें, बाएँ से सांस लें\nबाएँ बंद करें, दाएँ खोलकर छोड़ें\nदाएँ से लें, फिर बाएँ से छोड़ें\n2 से 5 मिनट तक करें",
+"breathingSadness": "पेट पर एक हाथ रखें\nनाक से धीरे-धीरे सांस लें, पेट उठता महसूस करें\nमुंह से छोड़ें, पेट नीचे आता महसूस करें\n3 से 5 मिनट दोहराएं",
+"breathingCalming": "नाक से 4 सेकंड तक सांस लें\n1 सेकंड रुकें\n4 सेकंड तक छोड़ें\n1 सेकंड का विराम\n5 से 10 बार दोहराएं"
+
 }

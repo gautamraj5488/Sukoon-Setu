@@ -419,6 +419,78 @@ abstract class AppLocalizations {
   /// **'Even the smallest step toward healing counts — walk gently but keep walking.'**
   String get thoughtOfTheDay;
 
+  /// No description provided for @breathingTechniques.
+  ///
+  /// In en, this message translates to:
+  /// **'Breathing Techniques'**
+  String get breathingTechniques;
+
+  /// No description provided for @audioBook1.
+  ///
+  /// In en, this message translates to:
+  /// **'Life-Changing Motivational Stories'**
+  String get audioBook1;
+
+  /// No description provided for @audioBook2.
+  ///
+  /// In en, this message translates to:
+  /// **'Rural India and Mental Health'**
+  String get audioBook2;
+
+  /// No description provided for @audioBook1Link.
+  ///
+  /// In en, this message translates to:
+  /// **'https://www.youtube.com/watch?v=wsNW00J-IIQ'**
+  String get audioBook1Link;
+
+  /// No description provided for @audioBook2Link.
+  ///
+  /// In en, this message translates to:
+  /// **'https://www.youtube.com/watch?v=EiOzFwjFZhQ'**
+  String get audioBook2Link;
+
+  /// No description provided for @yogaLink.
+  ///
+  /// In en, this message translates to:
+  /// **'https://www.youtube.com/watch?pp=0gcJCdgAo7VqN5tD&v=W-e55pc4ZSk'**
+  String get yogaLink;
+
+  /// No description provided for @meditationLink.
+  ///
+  /// In en, this message translates to:
+  /// **'https://www.youtube.com/watch?pp=0gcJCdgAo7VqN5tD&v=JuIeF8CMU5k'**
+  String get meditationLink;
+
+  /// No description provided for @breathingAnxietyWorry.
+  ///
+  /// In en, this message translates to:
+  /// **'Inhale through your nose for 4 seconds\nHold for 7 seconds\nExhale slowly through your mouth for 8 seconds\nRepeat 4 cycles'**
+  String get breathingAnxietyWorry;
+
+  /// No description provided for @breathingAnger.
+  ///
+  /// In en, this message translates to:
+  /// **'Inhale deeply through your nose\nExhale making a soft “hmmm” sound\nFocus on the vibration\nRepeat 5 to 10 times'**
+  String get breathingAnger;
+
+  /// No description provided for @breathingStressIrritation.
+  ///
+  /// In en, this message translates to:
+  /// **'Close your right nostril with your thumb, inhale through the left\nClose your left nostril, open the right and exhale\nInhale through the right, close it, exhale through the left\nRepeat for 2 to 5 minutes'**
+  String get breathingStressIrritation;
+
+  /// No description provided for @breathingSadness.
+  ///
+  /// In en, this message translates to:
+  /// **'Sit or lie with one hand on your belly\nInhale slowly through your nose, feel your belly rise\nExhale through your mouth, feel your belly fall\nRepeat for 3 to 5 minutes'**
+  String get breathingSadness;
+
+  /// No description provided for @breathingCalming.
+  ///
+  /// In en, this message translates to:
+  /// **'Inhale through your nose for 4 seconds\nHold for 1 second\nExhale through your mouth for 4 seconds\nPause for 1 second\nRepeat 5 to 10 times'**
+  String get breathingCalming;
+
   /// No description provided for @diabetes.
   ///
   /// In en, this message translates to:

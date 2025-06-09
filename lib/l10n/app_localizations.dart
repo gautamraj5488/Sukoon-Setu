@@ -491,6 +491,12 @@ abstract class AppLocalizations {
   /// **'Inhale through your nose for 4 seconds\nHold for 1 second\nExhale through your mouth for 4 seconds\nPause for 1 second\nRepeat 5 to 10 times'**
   String get breathingCalming;
 
+  /// No description provided for @aboutUsContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sukoon SETU is a simple, multilingual mental wellness app created especially for India’s underserved and rural communities. With tools rooted in science and culture, we offer breathing techniques, yoga, sound therapy, guided meditation, and mental health audiobooks — all crafted to help you regulate emotions and build inner calm.\nOur intelligent chatbot, SukoonSaathi, answers sensitive mental health questions with compassion and accuracy, using verified knowledge from Indian medical experts and WHO. You can also explore common mental health conditions in easy language, take a quiz to understand your emotional state, or receive a thoughtful reminder with our “Thought of the Day.”\nAccessible in Hindi, English, Marathi, Bengali, and Telugu, Sukoon SETU is your quiet companion on the journey to emotional well-being — because everyone deserves peace of mind.'**
+  String get aboutUsContent;
+
   /// No description provided for @diabetes.
   ///
   /// In en, this message translates to:

@@ -40,6 +40,7 @@ dependencies:
   pinput: ^5.0.1
   intl: ^0.20.2
   url_launcher: ^6.3.1
+  http: ^1.4.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,8 @@ flutter:
   assets:
     - assets/images/
     - assets/logos/
+    - assets/images/understand_common_diseases_icon_images/
+    - assets/images/breathing_techniques/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

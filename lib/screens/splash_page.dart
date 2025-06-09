@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
         context,
         MaterialPageRoute(
           // WelcomeScreen(onLocaleSelected: widget.onLocaleSelected)
-          builder: (context) => WelcomeScreen(onLocaleSelected: widget.onLocaleSelected),
+          builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleSelected),
         ),
       );
     });

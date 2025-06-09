@@ -36,10 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
 
     final localizations = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
+    final theme = Theme.of(context); 
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: theme.colorScheme.background,
       body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

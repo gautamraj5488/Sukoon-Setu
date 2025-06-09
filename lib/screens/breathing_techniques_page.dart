@@ -6,50 +6,46 @@ import 'package:sukoon_setu/l10n/app_localizations.dart';
 class BreathingTechniquesPage extends StatelessWidget {
   const BreathingTechniquesPage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final localizations = AppLocalizations.of(context)!;
 
-final List<Map<String, dynamic>> techniques = [
-  {
-    'title': 'Anxiety & Worry',
-    'description': localizations.breathingAnxietyWorry,
-    'duration': 60,
-    'icon': Icons.self_improvement,
-  },
-  {
-    'title': 'Anger',
-    'description': localizations.breathingAnger,
-    'duration': 90,
-    'icon': Icons.whatshot,
-  },
-  {
-    'title': 'Stress & Irritation',
-    'description': localizations.breathingStressIrritation,
-    'duration': 180,
-    'icon': Icons.sync_alt,
-  },
-  {
-    'title': 'Sadness',
-    'description': localizations.breathingSadness,
-    'duration': 150,
-    'icon': Icons.sentiment_dissatisfied,
-  },
-  {
-    'title': 'Calming',
-    'description': localizations.breathingCalming,
-    'duration': 90,
-    'icon': Icons.air_rounded,
-  },
-];
-
+    final List<Map<String, dynamic>> techniques = [
+      {
+        'title': 'Anxiety & Worry',
+        'description': localizations.breathingAnxietyWorry,
+        'duration': 60,
+        'icon': "assets/images/breathing_techniques/anxiety.jpeg",
+      },
+      {
+        'title': 'Anger',
+        'description': localizations.breathingAnger,
+        'duration': 90,
+        'icon': "assets/images/breathing_techniques/anger.jpeg",
+      },
+      {
+        'title': 'Stress & Irritation',
+        'description': localizations.breathingStressIrritation,
+        'duration': 180,
+        'icon': "assets/images/breathing_techniques/irritation.jpeg",
+      },
+      {
+        'title': 'Sadness',
+        'description': localizations.breathingSadness,
+        'duration': 150,
+        'icon': "assets/images/breathing_techniques/sadness.jpeg",
+      },
+      {
+        'title': 'Calming',
+        'description': localizations.breathingCalming,
+        'duration': 90,
+        'icon': "assets/images/breathing_techniques/calm.jpeg",
+      },
+    ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Breathing Techniques"),
-      ),
+      appBar: AppBar(title: const Text("Breathing Techniques")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
@@ -58,7 +54,7 @@ final List<Map<String, dynamic>> techniques = [
             crossAxisCount: 2,
             crossAxisSpacing: 16,
             mainAxisSpacing: 16,
-            childAspectRatio: 3 / 4,
+            childAspectRatio: 4 / 4,
           ),
           itemBuilder: (context, index) {
             final item = techniques[index];
@@ -84,8 +80,32 @@ final List<Map<String, dynamic>> techniques = [
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(item['icon'], size: 48, color: theme.colorScheme.primary),
+                    // Image inside a circle container
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primary.withOpacity(0.15),
+                        shape: BoxShape.circle,
+                        // Optional shadow
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(2, 2),
+                          ),
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          item['icon'], // your image path here
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+
                     const SizedBox(height: 16),
+
                     Text(
                       item['title'],
                       textAlign: TextAlign.center,
@@ -105,7 +125,6 @@ final List<Map<String, dynamic>> techniques = [
     );
   }
 }
-
 
 class BreathingDetailPage extends StatefulWidget {
   final String title;
@@ -202,7 +221,9 @@ class _BreathingDetailPageState extends State<BreathingDetailPage> {
                     value: (widget.duration - remainingTime) / widget.duration,
                     strokeWidth: 8,
                     backgroundColor: theme.colorScheme.primary.withOpacity(0.2),
-                    valueColor: AlwaysStoppedAnimation<Color>(theme.colorScheme.primary),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      theme.colorScheme.primary,
+                    ),
                   ),
                 ),
                 Text(
@@ -220,7 +241,10 @@ class _BreathingDetailPageState extends State<BreathingDetailPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: theme.colorScheme.primary,
                 foregroundColor: theme.colorScheme.onPrimary,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 14,
+                ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

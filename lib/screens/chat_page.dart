@@ -1,12 +1,74 @@
+import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/quiz_screen.dart';
 
-class ChatScreen extends StatelessWidget {
-  final Function(Locale) onLocaleChange;
+class ChatScreen extends StatefulWidget {
+final Function(Locale) onLocaleChange;
   const ChatScreen({super.key, required this.onLocaleChange});
+
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  final List<Map<String, String>> messages = [];
+  final TextEditingController _controller = TextEditingController();
+  bool _isLoading = false;
+
+  Future<void> sendMessage(String content) async {
+    if (content.trim().isEmpty) return;
+
+    setState(() {
+      messages.add({'role': 'user', 'content': content});
+      _controller.clear();
+      _isLoading = true;
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse("https://openrouter.ai/api/v1/chat/completions"),
+        headers: {
+          "Authorization": "Bearer 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",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "model": "deepseek/deepseek-chat",
+          "messages": [
+            for (var msg in messages)
+              {"role": msg['role'], "content": msg['content']},
+          ],
+        }),
+      );
+
+      final data = jsonDecode(response.body);
+      final botReply = data["choices"][0]["message"]["content"];
+
+      setState(() {
+        messages.add({'role': 'assistant', 'content': botReply});
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        messages.add({
+          'role': 'assistant',
+          'content': '❌ Failed to fetch response. Check your API key or network.'
+        });
+      });
+    }
+  }
+
+  void resetChat() {
+    setState(() {
+      messages.clear();
+    });
+  }
+
+  final userInfo = UserInfo(name: '', age: 0, gender: '', profession: '', area: '');
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +77,6 @@ class ChatScreen extends StatelessWidget {
     final textTheme = theme.textTheme;
     final localizations = AppLocalizations.of(context)!;
 
-    final userInfo = UserInfo(
-      name: '',
-      age: 0,
-      gender: '',
-      profession: '',
-      area: '',
-    );
-
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
@@ -30,13 +84,19 @@ class ChatScreen extends StatelessWidget {
           "Sukoon Sathi",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: resetChat,
+            tooltip: "Reset Chat",
+          ),
+        ],
       ),
-
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // 🟠 Assistant Chat Bubble in Center
-            Center(
+      body: Column(
+        children: [
+          Expanded(
+            child: messages.isEmpty
+                ? Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Container(
@@ -96,7 +156,7 @@ class ChatScreen extends StatelessWidget {
                                           MaterialPageRoute(
                                             builder: (_) => QuizScreen(
                                               userInfo: userInfo,
-                                              onLocaleChange: onLocaleChange,
+                                              onLocaleChange: widget.onLocaleChange,
                                             ),
                                           ),
                                         );
@@ -112,52 +172,74 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            )
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      final message = messages[index];
+                      final isUser = message['role'] == 'user';
 
-            // 💬 Input Bar at Bottom
-            Positioned(
-              bottom: 24,
-              left: 16,
-              right: 16,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.2),
-                  ),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        style: textTheme.bodyMedium?.copyWith(
-                          color: colorScheme.onSurface,
-                        ),
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Message SukoonSathi...",
-                          hintStyle: textTheme.bodyMedium?.copyWith(
-                            color: colorScheme.onSurface.withOpacity(0.5),
+                      return Align(
+                        alignment: isUser
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: isUser
+                                ? colorScheme.primary.withOpacity(0.1)
+                                : colorScheme.surfaceVariant,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            message['content'] ?? '',
+                            style: TextStyle(
+                              color: colorScheme.onSurface,
+                            ),
                           ),
                         ),
+                      );
+                    },
+                  ),
+          ),
+
+          // Input Bar
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    onSubmitted: sendMessage,
+                    decoration: InputDecoration(
+                      hintText: 'Message SukoonSathi...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 16,
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 20,
-                        color: colorScheme.primary,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(width: 8),
+                _isLoading
+                    ? const CircularProgressIndicator()
+                    : IconButton(
+                        icon: Icon(Icons.send_rounded,
+                            color: colorScheme.primary),
+                        onPressed: () {
+                          sendMessage(_controller.text);
+                        },
+                      ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

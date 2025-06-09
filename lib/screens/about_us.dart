@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sukoon_setu/l10n/app_localizations.dart';
 
 class AboutUsScreen extends StatelessWidget {
   const AboutUsScreen({super.key});
@@ -6,13 +7,14 @@ class AboutUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final localizations = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         backgroundColor: theme.colorScheme.primary,
         title: Text(
-          'About Us',
+          localizations.aboutUs,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: theme.appBarTheme.foregroundColor,
@@ -48,7 +50,7 @@ class AboutUsScreen extends StatelessWidget {
 
             // Description
             Text(
-              "We aim to make mental health support simple, accessible, and stigma-free. Sukoon Sathi provides personalized tools, audio stories, culturally relevant resources, and professional guidance to help you feel better — one step at a time.",
+              localizations.aboutUsContent,
               style: TextStyle(
                 fontSize: 15,
                 height: 1.6,

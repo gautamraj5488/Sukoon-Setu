@@ -434,16 +434,15 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/chat_page.dart';
-import 'package:sukoon_setu/screens/home_page.dart';
-import 'package:sukoon_setu/utils/app_theme.dart';
 
 class Question {
   final String section;
   final String text;
-  final List<String> options;
-  Question({required this.section, required this.text, required this.options});
+  // final List<String> options;
+  Question({required this.section, required this.text});
 }
 
 class QuizScreen extends StatefulWidget {
@@ -466,157 +465,63 @@ class _QuizScreenState extends State<QuizScreen> {
   int _timeLeft = 180;
 
   List<int?> _selectedOptions = [];
+  late List<Question> questions;
+    bool _isInitialized = false; 
 
-  final List<Question> questions = [
-    // Section A
-    Question(
-      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
-      text: 'Do you often feel sad, empty, or hopeless?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
-      text:
-          'Have you lost interest or joy in things you once enjoyed (e.g., farming, chatting, festivals)?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
-      text: 'Do you feel tired or lack energy most days?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
-      text: 'Do you have trouble sleeping, or sleep too much?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🟠 Section A: General Wellbeing (Last 2 Weeks)",
-      text: 'Do you feel restless, angry, or irritable for no reason?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-
-    // Section B
-    Question(
-      section: "🔶 Section B: Anxiety and Stress",
-      text:
-          'Do you worry too much about daily things (money, health, children)?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section B: Anxiety and Stress",
-      text:
-          'Do you feel nervous, fearful, or tense, even when there is no clear danger?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section B: Anxiety and Stress",
-      text: 'Do you have fast heartbeat, sweating, or shaking when anxious?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section B: Anxiety and Stress",
-      text: 'Do you have trouble concentrating due to worry or fear?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section B: Anxiety and Stress",
-      text:
-          'Do you often feel something bad is going to happen, even without a reason?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-
-    // Section C
-    Question(
-      section: "🔶 Section C: Thought and Behavior Changes",
-      text: 'Do you sometimes hear voices or see things others do not?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section C: Thought and Behavior Changes",
-      text: 'Do you believe that others are watching or trying to harm you?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section C: Thought and Behavior Changes",
-      text:
-          'Do you talk to yourself or act in a way that others find strange or confusing?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section C: Thought and Behavior Changes",
-      text: 'Have you ever forgotten what you did for long periods of time?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section C: Thought and Behavior Changes",
-      text:
-          'Do you feel like you are not yourself, or as if you are watching your own life?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-
-    // Section D
-    Question(
-      section: "🔶 Section D: Substance Use",
-      text: 'Do you drink alcohol or take tobacco/drugs regularly?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section D: Substance Use",
-      text: 'Do you feel you cannot stop using alcohol/drugs even if you try?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section D: Substance Use",
-      text:
-          'Has alcohol or drug use caused problems at home, work, or in health?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section D: Substance Use",
-      text: 'Do you use substances to feel better when you\'re sad or anxious?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section D: Substance Use",
-      text: 'Have people asked you to cut down on drinking or drug use?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-
-    // Section E
-    Question(
-      section: "🔶 Section E: Social and Functional Impairment",
-      text: 'Have you been avoiding people or staying alone more than before?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section E: Social and Functional Impairment",
-      text:
-          'Are you able to work properly or manage household responsibilities?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section E: Social and Functional Impairment",
-      text: 'Do you feel ashamed, useless, or like a burden to others?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section E: Social and Functional Impairment",
-      text: 'Have you ever thought about harming yourself or ending your life?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-    Question(
-      section: "🔶 Section E: Social and Functional Impairment",
-      text: 'Do you feel there is no reason to live?',
-      options: ['Never', 'Sometimes', 'Often', 'Always'],
-    ),
-  ];
 
   @override
   void initState() {
     super.initState();
-    _selectedOptions = List<int?>.filled(questions.length, null);
     _startTimer();
+  }
+
+    @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInitialized) return;
+
+    final localizations = AppLocalizations.of(context)!;
+
+    questions = [
+      // Section A
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion1),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion2),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion3),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion4),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion5),
+
+      // Section B
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion1),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion2),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion3),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion4),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion5),
+
+      // Section C
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion1),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion2),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion3),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion4),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion5),
+
+      // Section D
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion1),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion2),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion3),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion4),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion5),
+
+      // Section E
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion1),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion2),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion3),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion4),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion5),
+    ];
+
+    _selectedOptions = List<int?>.filled(questions.length, null);
+
+    _isInitialized = true;
   }
 
   void _startTimer() {
@@ -686,9 +591,17 @@ class _QuizScreenState extends State<QuizScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final localizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final question = questions[_currentIndex];
     final selectedOption = _selectedOptions[_currentIndex];
+
+    final options = [localizations.optionA,localizations.optionB,localizations.optionC,localizations.optionD];
+   
+
+
+    
 
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
@@ -764,8 +677,8 @@ class _QuizScreenState extends State<QuizScreen> {
               SizedBox(height: 30),
 
               // Options
-              ...List.generate(question.options.length, (index) {
-                final optionText = question.options[index];
+              ...List.generate(options.length, (index) {
+                final optionText = options[index];
                 final isSelected = selectedOption == index;
 
                 return Padding(

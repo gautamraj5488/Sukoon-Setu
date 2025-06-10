@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
-import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/home_page.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -36,6 +37,36 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       filled: true,
       fillColor: theme.colorScheme.surface,
+    );
+  }
+
+
+    bool _isLoading = false;
+
+
+  Future<void> _submitUserInfo() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+
+    if (uid == null) return;
+
+    setState(() => _isLoading = true);
+
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'name': nameController.text.trim(),
+      'age': ageController.text.trim(),
+      'profession': professionController.text.trim(),
+      'area': areaController.text.trim(),
+      'weight': weightController.text.trim(),
+      'height': heightController.text.trim(),
+      'phone': FirebaseAuth.instance.currentUser?.phoneNumber,
+      'createdAt': FieldValue.serverTimestamp(),
+    });
+
+    setState(() => _isLoading = false);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) =>  HomeScreen(onLocaleChange: widget.onLocaleChange,)),
     );
   }
 
@@ -171,30 +202,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final userInfo = UserInfo(
-                        name: nameController.text.trim(),
-                        age: int.parse(ageController.text.trim()),
-                        gender: selectedGender!,
-                        profession: professionController.text.trim(),
-                        area: areaController.text.trim(),
-                        weight: weightController.text.trim().isEmpty
-                            ? null
-                            : double.tryParse(weightController.text.trim()),
-                        height: heightController.text.trim().isEmpty
-                            ? null
-                            : double.tryParse(heightController.text.trim()),
-                      );
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleChange),
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: _isLoading ? null : _submitUserInfo,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: theme.colorScheme.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
@@ -202,7 +210,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text(
+                  child: _isLoading ? const CircularProgressIndicator() : Text(
                     localizations.ccontinue,
                     style: theme.textTheme.labelLarge?.copyWith(
                       color: theme.colorScheme.onPrimary,

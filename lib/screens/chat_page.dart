@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:http/http.dart' as http;
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/quiz_screen.dart';
 
 class ChatScreen extends StatefulWidget {
-final Function(Locale) onLocaleChange;
+  final Function(Locale) onLocaleChange;
   const ChatScreen({super.key, required this.onLocaleChange});
 
   @override
@@ -18,9 +20,32 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<Map<String, String>> messages = [];
   final TextEditingController _controller = TextEditingController();
   bool _isLoading = false;
+  String? apiKey;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadApiKey();
+  }
+
+  Future<void> _loadApiKey() async {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: const Duration(seconds: 0),
+      ),
+    );
+
+    await remoteConfig.fetchAndActivate();
+    setState(() {
+      apiKey = remoteConfig.getString('openrouter_api_key');
+    });
+  }
 
   Future<void> sendMessage(String content) async {
-    if (content.trim().isEmpty) return;
+    if (content.trim().isEmpty || apiKey == null) return;
 
     setState(() {
       messages.add({'role': 'user', 'content': content});
@@ -32,7 +57,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final response = await http.post(
         Uri.parse("https://openrouter.ai/api/v1/chat/completions"),
         headers: {
-          "Authorization": "Bearer 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",
+          "Authorization": "Bearer $apiKey",
           "Content-Type": "application/json",
         },
         body: jsonEncode({
@@ -56,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
         _isLoading = false;
         messages.add({
           'role': 'assistant',
-          'content': '❌ Failed to fetch response. Check your API key or network.'
+          'content': '❌ Failed to fetch response. Check API key or network.',
         });
       });
     }
@@ -68,7 +93,13 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  final userInfo = UserInfo(name: '', age: 0, gender: '', profession: '', area: '');
+  final userInfo = UserInfo(
+    name: '',
+    age: 0,
+    gender: '',
+    profession: '',
+    area: '',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +108,9 @@ class _ChatScreenState extends State<ChatScreen> {
     final textTheme = theme.textTheme;
     final localizations = AppLocalizations.of(context)!;
 
+    if (apiKey == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     return Scaffold(
       backgroundColor: colorScheme.background,
       appBar: AppBar(
@@ -92,75 +126,82 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
+
       body: Column(
         children: [
           Expanded(
             child: messages.isEmpty
                 ? Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Container(
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: colorScheme.surface,
-                    borderRadius: BorderRadius.circular(24),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.04),
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: colorScheme.secondary.withOpacity(0.2),
-                        child: Icon(
-                          Icons.android,
-                          color: colorScheme.secondary,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        height: 80,
+                        decoration: BoxDecoration(
+                          color: colorScheme.surface,
+                          borderRadius: BorderRadius.circular(24),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.04),
+                              blurRadius: 6,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Namaste, how can I help you today?',
-                              style: textTheme.bodyLarge?.copyWith(
-                                color: colorScheme.onSurface,
-                                fontWeight: FontWeight.w600,
+                            CircleAvatar(
+                              radius: 20,
+                              backgroundColor: colorScheme.secondary
+                                  .withOpacity(0.2),
+                              child: Icon(
+                                Icons.android,
+                                color: colorScheme.secondary,
                               ),
                             ),
-                            const SizedBox(height: 4),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Not sure what to ask? ',
-                                style: textTheme.bodyMedium?.copyWith(
-                                  color: colorScheme.onSurface.withOpacity(0.6),
-                                ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  TextSpan(
-                                    text: 'Take the quiz',
-                                    style: textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.primary,
+                                  Text(
+                                    'Namaste, how can I help you today?',
+                                    style: textTheme.bodyLarge?.copyWith(
+                                      color: colorScheme.onSurface,
                                       fontWeight: FontWeight.w600,
                                     ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (_) => QuizScreen(
-                                              userInfo: userInfo,
-                                              onLocaleChange: widget.onLocaleChange,
-                                            ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  RichText(
+                                    text: TextSpan(
+                                      text: 'Not sure what to ask? ',
+                                      style: textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.onSurface
+                                            .withOpacity(0.6),
+                                      ),
+                                      children: [
+                                        TextSpan(
+                                          text: 'Take the quiz',
+                                          style: textTheme.bodyMedium?.copyWith(
+                                            color: colorScheme.primary,
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                        );
-                                      },
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (_) => QuizScreen(
+                                                    userInfo: userInfo,
+                                                    onLocaleChange:
+                                                        widget.onLocaleChange,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -168,11 +209,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            )
+                    ),
+                  )
                 : ListView.builder(
                     padding: const EdgeInsets.all(16),
                     itemCount: messages.length,
@@ -193,11 +231,25 @@ class _ChatScreenState extends State<ChatScreen> {
                                 : colorScheme.surfaceVariant,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: Text(
-                            message['content'] ?? '',
-                            style: TextStyle(
-                              color: colorScheme.onSurface,
-                            ),
+                          child: MarkdownBody(
+                            data: message['content'] ?? '',
+                            styleSheet:
+                                MarkdownStyleSheet.fromTheme(
+                                  Theme.of(context),
+                                ).copyWith(
+                                  h3: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme.primary,
+                                  ),
+                                  p: TextStyle(
+                                    fontSize: 14,
+                                    color: colorScheme.onSurface,
+                                  ),
+                                  listBullet: TextStyle(
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
                           ),
                         ),
                       );
@@ -230,8 +282,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 _isLoading
                     ? const CircularProgressIndicator()
                     : IconButton(
-                        icon: Icon(Icons.send_rounded,
-                            color: colorScheme.primary),
+                        icon: Icon(
+                          Icons.send_rounded,
+                          color: colorScheme.primary,
+                        ),
                         onPressed: () {
                           sendMessage(_controller.text);
                         },

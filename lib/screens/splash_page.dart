@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/screens/home_page.dart';
 import 'package:sukoon_setu/screens/welcome_page.dart';
@@ -11,19 +12,37 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          // WelcomeScreen(onLocaleSelected: widget.onLocaleSelected)
-          builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleSelected),
-        ),
-      );
-    });
+
+
+@override
+void initState() {
+  super.initState();
+  _checkAuthStatus();
+}
+
+  void _checkAuthStatus() async {
+  await Future.delayed(const Duration(seconds: 2)); // show splash for 2 seconds
+
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (user != null) {
+    // User is already logged in
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleSelected,),
+      ),
+    );
+  } else {
+    // User is not logged in, go to welcome screen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WelcomeScreen(onLocaleSelected: widget.onLocaleSelected),
+      ),
+    );
   }
+}
 
   @override
   Widget build(BuildContext context) {

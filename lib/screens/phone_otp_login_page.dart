@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:sukoon_setu/screens/home_page.dart';
 import 'package:sukoon_setu/screens/language_selection_page.dart';
 
 class PhoneOtpLoginPage extends StatefulWidget {
@@ -15,24 +18,79 @@ class _PhoneOtpLoginPageState extends State<PhoneOtpLoginPage> {
   String _otpCode = '';
   bool _otpSent = false;
 
-  void _sendOtp() {
-    setState(() {
-      _otpSent = true;
-    });
-  }
+final FirebaseAuth _auth = FirebaseAuth.instance;
+String _verificationId = '';
 
-  void _verifyOtp() {
-    if (_otpCode.length == 6) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LanguageSelectionScreen(
-            onLocaleChange: widget.onLocaleSelected,
-          ),
-        ),
+void _sendOtp() async {
+  String phone = '+91${_phoneController.text.trim()}';
+
+  await _auth.verifyPhoneNumber(
+    phoneNumber: phone,
+    verificationCompleted: (PhoneAuthCredential credential) async {
+      await _auth.signInWithCredential(credential);
+      _checkUserAndNavigate();
+    },
+    verificationFailed: (FirebaseAuthException e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Verification failed: ${e.message}")),
       );
-    }
+    },
+    codeSent: (String verificationId, int? resendToken) {
+      setState(() {
+        _verificationId = verificationId;
+        _otpSent = true;
+      });
+    },
+    codeAutoRetrievalTimeout: (String verificationId) {
+      _verificationId = verificationId;
+    },
+  );
+}
+
+void _verifyOtp() async {
+  try {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: _otpCode,
+    );
+
+    await _auth.signInWithCredential(credential);
+    _checkUserAndNavigate();
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Invalid OTP. Please try again.")),
+    );
   }
+}
+
+void _checkUserAndNavigate() async {
+  final user = FirebaseAuth.instance.currentUser;
+
+  if (user == null) return;
+
+  final userDoc = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(user.uid)
+      .get();
+
+  if (userDoc.exists) {
+    // User already registered, go to HomeScreen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen(onLocaleChange: widget.onLocaleSelected)),
+    );
+  } else {
+    // New user, take details
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            LanguageSelectionScreen(onLocaleChange: widget.onLocaleSelected),
+      ),
+    );
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

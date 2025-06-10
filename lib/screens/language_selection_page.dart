@@ -58,7 +58,10 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
             const SizedBox(height: 20),
             Text(
               localizations.selectLanguage,
-              style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold, fontSize: 18),
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
@@ -98,10 +101,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                     children: [
                       Text(lang['flag']!, style: const TextStyle(fontSize: 20)),
                       const SizedBox(width: 12),
-                      Text(
-                        lang['label']!,
-                        style: theme.textTheme.bodyLarge,
-                      ),
+                      Text(lang['label']!, style: theme.textTheme.bodyLarge),
                     ],
                   ),
                 ),
@@ -109,7 +109,6 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
             ),
 
             const SizedBox(height: 40), // replaces Spacer()
-
             // Continue Button
             SizedBox(
               width: double.infinity,
@@ -117,7 +116,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 onPressed: selectedLanguageCode == null
                     ? null
                     : () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PersonalInfoScreen(
@@ -144,7 +143,6 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
     );
   }
 }
-
 
 // Eglish
 // Hindi

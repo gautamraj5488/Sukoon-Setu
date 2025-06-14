@@ -432,18 +432,27 @@
 //   }
 // }
 
-import 'dart:async';
+
+
 import 'package:flutter/material.dart';
 import 'package:sukoon_setu/l10n/app_localizations.dart';
 import 'package:sukoon_setu/models/user_info_model.dart';
 import 'package:sukoon_setu/screens/chat_page.dart';
 
+Map<String, int> sectionScores = {};
+
 class Question {
-  final String section;
+  final String sectionKey; // e.g., "Section A"
+  final String section;    // full name like "🟠 Section A: General Wellbeing..."
   final String text;
-  // final List<String> options;
-  Question({required this.section, required this.text});
+
+  Question({
+    required this.sectionKey,
+    required this.section,
+    required this.text,
+  });
 }
+
 
 class QuizScreen extends StatefulWidget {
   final Function(Locale) onLocaleChange;
@@ -461,8 +470,8 @@ class QuizScreen extends StatefulWidget {
 class _QuizScreenState extends State<QuizScreen> {
   final PageController _controller = PageController();
   int _currentIndex = 0;
-  late Timer _timer;
-  int _timeLeft = 180;
+  // late Timer _timer;
+  // int _timeLeft = 180;
 
   List<int?> _selectedOptions = [];
   late List<Question> questions;
@@ -472,7 +481,8 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    // _startTimer();
+    sectionScores.clear();
   }
 
     @override
@@ -484,39 +494,39 @@ class _QuizScreenState extends State<QuizScreen> {
 
     questions = [
       // Section A
-      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion1),
-      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion2),
-      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion3),
-      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion4),
-      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion5),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion1, sectionKey: 'Section A'),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion2, sectionKey: 'Section A'),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion3, sectionKey: 'Section A'),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion4, sectionKey: 'Section A'),
+      Question(section: "🟠 Section A: General Wellbeing (Last 2 Weeks)", text: localizations.quizSectionAQuestion5, sectionKey: 'Section A'),
 
       // Section B
-      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion1),
-      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion2),
-      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion3),
-      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion4),
-      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion5),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion1, sectionKey: 'Section B'),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion2, sectionKey: 'Section B'),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion3, sectionKey: 'Section B'),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion4, sectionKey: 'Section B'),
+      Question(section: "🔶 Section B: Anxiety and Stress", text: localizations.quizSectionBQuestion5, sectionKey: 'Section B'),
 
       // Section C
-      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion1),
-      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion2),
-      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion3),
-      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion4),
-      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion5),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion1, sectionKey: 'Section C'),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion2, sectionKey: 'Section C'),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion3, sectionKey: 'Section C'),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion4, sectionKey: 'Section C'),
+      Question(section: "🔶 Section C: Thought and Behavior Changes", text: localizations.quizSectionCQuestion5, sectionKey: 'Section C'),
 
       // Section D
-      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion1),
-      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion2),
-      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion3),
-      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion4),
-      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion5),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion1, sectionKey: 'Section D'),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion2, sectionKey: 'Section D'),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion3, sectionKey: 'Section D'),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion4, sectionKey: 'Section D'),
+      Question(section: "🔶 Section D: Substance Use", text: localizations.quizSectionDQuestion5, sectionKey: 'Section D'),
 
       // Section E
-      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion1),
-      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion2),
-      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion3),
-      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion4),
-      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion5),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion1, sectionKey: 'Section E'),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion2, sectionKey: 'Section E'),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion3, sectionKey: 'Section E'),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion4, sectionKey: 'Section E'),
+      Question(section: "🔶 Section E: Social and Functional Impairment", text: localizations.quizSectionEQuestion5, sectionKey: 'Section E'),
     ];
 
     _selectedOptions = List<int?>.filled(questions.length, null);
@@ -524,30 +534,58 @@ class _QuizScreenState extends State<QuizScreen> {
     _isInitialized = true;
   }
 
-  void _startTimer() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_timeLeft == 0) {
-        _timer.cancel();
-        _navigateToHome();
-      } else {
-        setState(() => _timeLeft--);
-      }
-    });
-  }
+  // void _startTimer() {
+  //   _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     if (_timeLeft == 0) {
+  //       _timer.cancel();
+  //       _navigateToHome();
+  //     } else {
+  //       setState(() => _timeLeft--);
+  //     }
+  //   });
+  // }
 
-  void _navigateToHome() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) => ChatScreen(onLocaleChange: widget.onLocaleChange),
-      ),
-    );
-  }
+// void _navigateToHome(Map<String, int> sectionScores) {
+//   Navigator.of(context).pushReplacement(
+//     MaterialPageRoute(
+//       builder: (_) => ChatScreen(
+//         onLocaleChange: widget.onLocaleChange,
+//         sectionScores: sectionScores,
+//       ),
+//     ),
+//   );
+// }
+
+
+// void _navigateToHome(Map<String, int> sectionScores) {
+//   Navigator.pop(context, sectionScores);
+// }
+void _navigateBackWithScores(Map<String, int> sectionScores) {
+  Navigator.pop(context, sectionScores);
+}
+
 
   void _onOptionSelected(int optionIndex) {
     setState(() {
+      final currentQuestion = questions[_currentIndex];
+      final section = currentQuestion.sectionKey;
+
+      // If an option was previously selected, subtract its score
+      int? previousOption = _selectedOptions[_currentIndex];
+      if (previousOption != null) {
+        sectionScores[section] = (sectionScores[section] ?? 0) - (previousOption + 1);
+      }
+
+      // Save the new selection
       _selectedOptions[_currentIndex] = optionIndex;
+
+      // Add the new score
+      int score = optionIndex + 1;
+      sectionScores[section] = (sectionScores[section] ?? 0) + score;
     });
   }
+
+
 
   void _goNext() {
     if (_currentIndex < questions.length - 1) {
@@ -559,8 +597,10 @@ class _QuizScreenState extends State<QuizScreen> {
         curve: Curves.easeInOut,
       );
     } else {
-      _timer.cancel();
-      _navigateToHome();
+      // _timer.cancel();
+      // _navigateToHome(sectionScores);
+      _navigateBackWithScores(sectionScores);
+
     }
   }
 
@@ -576,15 +616,15 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
-  String _formatTime(int seconds) {
-    final minutes = seconds ~/ 60;
-    final remainingSeconds = seconds % 60;
-    return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
-  }
+  // String _formatTime(int seconds) {
+  //   final minutes = seconds ~/ 60;
+  //   final remainingSeconds = seconds % 60;
+  //   return '${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}';
+  // }
 
   @override
   void dispose() {
-    _timer.cancel();
+    // _timer.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -630,18 +670,18 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 minHeight: 8,
               ),
-              SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Text(
-                  "Time Left: ${_formatTime(_timeLeft)}",
-                  style: TextStyle(
-                    color: theme.colorScheme.error,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
+              // SizedBox(height: 12),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Text(
+              //     "Time Left: ${_formatTime(_timeLeft)}",
+              //     style: TextStyle(
+              //       color: theme.colorScheme.error,
+              //       fontWeight: FontWeight.w600,
+              //       fontSize: 16,
+              //     ),
+              //   ),
+              // ),
               SizedBox(height: 20),
               Text(
                 question.section,
